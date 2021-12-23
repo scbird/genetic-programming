@@ -2,13 +2,11 @@ import {
   getClosestCreatureAngle,
   getClosestCreatureDistance,
   getClosestPlantAngle,
-  getClosestPlantDistance
+  getClosestPlantDistance,
+  getWouldEat
 } from '../selectors'
 import { OperatorFunction } from '../types'
 import { toBool } from './boolean'
-
-const MAX_EAT_DISTANCE = 2
-const MAX_EAT_ANGLE = Math.PI / 4
 
 export const closestCreatureDistance: OperatorFunction = (state, id) => () =>
   getClosestCreatureDistance(state, id)
@@ -36,11 +34,6 @@ export const closestFoodAngle: OperatorFunction = (state, id) => () => {
   }
 }
 
-export const canEat: OperatorFunction = toBool(
-  (state, id, requestAction) => () => {
-    const distance = closestFoodDistance(state, id, requestAction)()
-    const angle = closestFoodAngle(state, id, requestAction)()
-
-    return distance <= MAX_EAT_DISTANCE && Math.abs(angle) <= MAX_EAT_ANGLE
-  }
-)
+export const canEat: OperatorFunction = toBool((state, id) => () => {
+  return getWouldEat(state, id) !== null
+})

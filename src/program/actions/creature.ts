@@ -8,7 +8,7 @@ export const CREATURE_SET_REQUESTED_ACTIONS = 'CREATURE_SET_REQUESTED_ACTIONS'
 
 export function eat(
   id: number,
-  type: 'plant' | 'creature',
+  type: 'plant' | 'creature' | 'nothing',
   targetId: number
 ): AnyAction {
   return {

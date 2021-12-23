@@ -1,15 +1,21 @@
 import { Reducer } from 'redux'
 import {
+  CREATURE_EAT,
   CREATURE_MOVE,
   CREATURE_SET_REQUESTED_ACTIONS,
   CREATURE_TURN
 } from '../actions'
-import { BoardState } from '../types'
+import { getCreatures, getPlants } from '../selectors'
+import { BoardState, Creature, Plant } from '../types'
 import { normalizeHeading } from '../util'
 import { initialState } from './board'
 
 const MAX_TURN = Math.PI / 4
 const MAX_MOVE = 2
+const EATING_SCORES = {
+  creature: 5,
+  plant: 1
+}
 
 export const creaturesReducer: Reducer<BoardState> = (
   state = initialState,
@@ -83,6 +89,37 @@ export const creaturesReducer: Reducer<BoardState> = (
             return creature
           }
         })
+      }
+
+    case CREATURE_EAT:
+      let target: Creature | Plant | undefined
+
+      if (action.payload.type === 'creature') {
+        target = getCreatures(state)[action.payload.targetId]
+      } else if (action.payload.type === 'plant') {
+        target = getPlants(state)[action.payload.targetId]
+      } else {
+        target = undefined
+      }
+
+      if (target && target.diedAt !== null) {
+        return {
+          ...state,
+          creatures: state.creatures.map((creature) => {
+            if (target === creature) {
+              return { ...creature, diedAt: state.tick }
+            } else if (action.payload.id === creature.id) {
+              return {
+                ...creature,
+                score: creature.score + EATING_SCORES[target!.type]
+              }
+            } else {
+              return creature
+            }
+          })
+        }
+      } else {
+        return state
       }
 
     default:

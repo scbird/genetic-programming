@@ -3,9 +3,14 @@ import {
   getDistance,
   getHeading,
   getNearestTo,
-  getRelativeAngle
+  getRelativeAngle,
+  HasLocation,
+  normalizeHeading
 } from '../util'
 import { getCreatures, getPlants } from './board'
+
+const MAX_EAT_DISTANCE = 1
+const MAX_EAT_ANGLE = Math.PI / 4
 
 export function getClosestCreatureDistance(
   state: BoardState,
@@ -40,6 +45,45 @@ export function getClosestPlantAngle(state: BoardState, id: number): number {
 
 export function getCreatureExpression(state: BoardState, id: number): string {
   return getCreatures(state)[id].expression
+}
+
+export function getWouldEat(
+  state: BoardState,
+  id: number
+): Creature | Plant | null {
+  return getWouldEatCreature(state, id) ?? getWouldEatPlant(state, id)
+}
+
+function getWouldEatPlant(state: BoardState, id: number) {
+  return getWouldEatObject(getCreatures(state)[id], getPlants(state))
+}
+
+function getWouldEatCreature(state: BoardState, id: number) {
+  const creatures = getCreatures(state)
+
+  return getWouldEatObject(
+    creatures[id],
+    creatures.filter((creature) => creature.id !== id)
+  )
+}
+
+function getWouldEatObject<T extends HasLocation>(
+  creature: Creature,
+  objects: readonly T[]
+): T | null {
+  const objectDistances = objects
+    .map((curr) => [curr, getDistance(creature, curr)] as [T, number])
+    .filter(([curr, distance]) => {
+      return (
+        distance <= MAX_EAT_DISTANCE &&
+        Math.abs(
+          normalizeHeading(creature.heading - getHeading(creature, curr))
+        ) <= MAX_EAT_ANGLE
+      )
+    })
+    .sort((a, b) => a[1] - b[1])
+
+  return objectDistances[0][0] ?? null
 }
 
 function getClosestCreatureTo(state: BoardState, id: number): Creature {

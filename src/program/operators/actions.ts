@@ -1,36 +1,19 @@
 import {
-  getClosestCreatureAngle,
-  getClosestCreatureDistance,
-  getClosestPlantDistance
-} from '../selectors'
-import { OperatorFunction } from '../types'
-import {
   eat as eatAction,
   move as moveAction,
   turn as turnAction
 } from '../actions'
-
-const MAX_EAT_DISTANCE = 1
-const MAX_EAT_ANGLE = Math.PI / 8
+import { getWouldEat } from '../selectors'
+import { OperatorFunction } from '../types'
 
 export const eat: OperatorFunction = (state, id, requestAction) => () => {
-  const closestCreatureDistance = getClosestCreatureDistance(state, id)
-  const closestCreatureAngle = getClosestCreatureAngle(state, id)
+  const wouldEat = getWouldEat(state, id)
 
-  if (
-    Math.abs(closestCreatureAngle) <= MAX_EAT_ANGLE &&
-    closestCreatureDistance <= MAX_EAT_DISTANCE
-  ) {
-    return
+  if (wouldEat) {
+    return requestAction(eatAction(id, wouldEat.type, wouldEat.id))
+  } else {
+    return requestAction(eatAction(id, 'nothing', 0))
   }
-
-  const closestCreatureAngle = getClosestCreatureAngle()
-
-  const closestPlantDistance = getClosestPlantDistance(state, id)
-
-  const closestPlantDistance = getClosestPlantDistance(state, id)
-
-  return requestAction(eatAction(id))
 }
 
 export const move: OperatorFunction = (state, id, requestAction) => (
