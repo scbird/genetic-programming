@@ -8,4 +8,6 @@ export interface BoardState {
   creatures: Creature[]
   plants: Plant[]
   boardSize: Dimension
+  plantRestoreDelay: 5
+  creatureRestoreDelay: 5
 }

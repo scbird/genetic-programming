@@ -1,5 +1,5 @@
 import { Reducer } from 'redux'
-import { CREATURE_EAT } from '../actions'
+import { CREATURE_EAT, DEAD_RESTORE } from '../actions'
 import { getCreatures, getPlants } from '../selectors'
 import { BoardState, Creature, Plant } from '../types'
 import { initialState } from './board'
@@ -9,6 +9,21 @@ export const plantsReducer: Reducer<BoardState> = (
   action
 ) => {
   switch (action.type) {
+    case DEAD_RESTORE:
+      return {
+        ...state,
+        plants: getPlants(state).map((plant) => {
+          if (
+            plant.diedAt !== null &&
+            state.tick > plant.diedAt + state.plantRestoreDelay
+          ) {
+            return { ...plant, diedAt: null }
+          } else {
+            return plant
+          }
+        })
+      }
+
     case CREATURE_EAT:
       const eatingCreature = getCreatures(state)[action.payload.id]
       let target: Creature | Plant | undefined

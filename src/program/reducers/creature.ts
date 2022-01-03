@@ -2,8 +2,8 @@ import { Reducer } from 'redux'
 import {
   CREATURE_EAT,
   CREATURE_MOVE,
-  CREATURE_SET_REQUESTED_ACTIONS,
-  CREATURE_TURN
+  CREATURE_TURN,
+  DEAD_RESTORE
 } from '../actions'
 import { getCreatures, getPlants } from '../selectors'
 import { BoardState, Creature, Plant } from '../types'
@@ -18,16 +18,17 @@ export const creaturesReducer: Reducer<BoardState> = (
   action
 ) => {
   switch (action.type) {
-    case CREATURE_SET_REQUESTED_ACTIONS:
+    case DEAD_RESTORE:
       return {
         ...state,
         creatures: state.creatures.map((creature) => {
-          const requestedAction = action.payload[creature.id]
-
-          if (requestedAction === undefined) {
-            return creature
+          if (
+            creature.diedAt !== null &&
+            state.tick > creature.diedAt + state.creatureRestoreDelay
+          ) {
+            return { ...creature, diedAt: null }
           } else {
-            return { ...creature, requestedAction }
+            return creature
           }
         })
       }

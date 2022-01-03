@@ -4,8 +4,6 @@ export const CREATURE_EAT = 'CREATURE_EAT'
 export const CREATURE_MOVE = 'CREATURE_MOVE'
 export const CREATURE_TURN = 'CREATURE_TURN'
 
-export const CREATURE_SET_REQUESTED_ACTIONS = 'CREATURE_SET_REQUESTED_ACTIONS'
-
 export function eat(
   id: number,
   type: 'plant' | 'creature' | 'nothing',
@@ -30,10 +28,3 @@ export function turn(id: number, angle: number): AnyAction {
     payload: { id, angle }
   }
 }
-
-export const setRequestedActions: (
-  actionsById: Record<number, AnyAction | null>
-) => AnyAction = (actionsById) => ({
-  type: CREATURE_SET_REQUESTED_ACTIONS,
-  payload: actionsById
-})
