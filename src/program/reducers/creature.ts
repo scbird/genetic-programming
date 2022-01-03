@@ -12,10 +12,6 @@ import { initialState } from './board'
 
 const MAX_TURN = Math.PI / 4
 const MAX_MOVE = 2
-const EATING_SCORES = {
-  creature: 5,
-  plant: 1
-}
 
 export const creaturesReducer: Reducer<BoardState> = (
   state = initialState,
@@ -116,7 +112,11 @@ export const creaturesReducer: Reducer<BoardState> = (
             } else if (action.payload.id === creature.id) {
               return {
                 ...creature,
-                score: creature.score + EATING_SCORES[target!.type]
+                plantsEaten:
+                  creature.plantsEaten + (target?.type === 'plant' ? 1 : 0),
+                creaturesEaten:
+                  creature.creaturesEaten +
+                  (target?.type === 'creature' ? 1 : 0)
               }
             } else {
               return creature

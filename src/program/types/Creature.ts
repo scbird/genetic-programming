@@ -9,5 +9,6 @@ export interface Creature {
   location: Point
   heading: number
   requestedAction: AnyAction | null
-  score: number
+  creaturesEaten: number
+  plantsEaten: number
 }
