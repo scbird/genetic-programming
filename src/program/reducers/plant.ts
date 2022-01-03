@@ -1,6 +1,6 @@
 import { Reducer } from 'redux'
 import { CREATURE_EAT } from '../actions'
-import { getPlants } from '../selectors'
+import { getCreatures, getPlants } from '../selectors'
 import { BoardState, Creature, Plant } from '../types'
 import { initialState } from './board'
 
@@ -10,6 +10,7 @@ export const plantsReducer: Reducer<BoardState> = (
 ) => {
   switch (action.type) {
     case CREATURE_EAT:
+      const eatingCreature = getCreatures(state)[action.payload.id]
       let target: Creature | Plant | undefined
 
       if (action.payload.type === 'plant') {
@@ -18,7 +19,7 @@ export const plantsReducer: Reducer<BoardState> = (
         target = undefined
       }
 
-      if (target && target.diedAt !== null) {
+      if (eatingCreature?.diedAt === null && target?.diedAt === null) {
         return {
           ...state,
           plants: state.plants.map((plant) => {

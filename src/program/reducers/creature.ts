@@ -92,6 +92,7 @@ export const creaturesReducer: Reducer<BoardState> = (
       }
 
     case CREATURE_EAT:
+      const eatingCreature = getCreatures(state)[action.payload.id]
       let target: Creature | Plant | undefined
 
       if (action.payload.type === 'creature') {
@@ -102,7 +103,11 @@ export const creaturesReducer: Reducer<BoardState> = (
         target = undefined
       }
 
-      if (target && target.diedAt !== null) {
+      if (
+        eatingCreature?.diedAt === null &&
+        target?.diedAt === null &&
+        eatingCreature !== target
+      ) {
         return {
           ...state,
           creatures: state.creatures.map((creature) => {

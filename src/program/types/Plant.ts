@@ -4,5 +4,5 @@ export interface Plant {
   type: 'plant'
   id: number
   location: Point
-  diedAt: number
+  diedAt: number | null
 }
