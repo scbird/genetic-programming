@@ -1,11 +1,15 @@
 import { AnyAction } from 'redux'
 import { ThunkAction } from 'redux-thunk'
 import { getDesiredActions, getMutatedExpressions } from '../selectors'
-import { BoardState } from '../types'
+import { BoardState, Dimension } from '../types'
 import { setExpressions } from './creature'
 
 export const BOARD_NEXT_TICK = 'BOARD_NEXT_TICK'
 export const BOARD_NEXT_GENERATION = 'BOARD_NEXT_GENERATION'
+export const BOARD_NUM_PLANTS_SET = 'BOARD_NUM_PLANTS_SET'
+export const BOARD_NUM_CREATURES_SET = 'BOARD_NUM_CREATURES_SET'
+export const BOARD_TICKS_PER_GENERATION_SET = 'BOARD_TICKS_PER_GENERATION_SET'
+export const BOARD_SIZE_SET = 'BOARD_SIZE_SET'
 
 export const step: () => ThunkAction<void, BoardState, any, any> = () => (
   dispatch,
@@ -23,6 +27,22 @@ export const step: () => ThunkAction<void, BoardState, any, any> = () => (
 
   dispatch(nextTick())
   dispatch(performCreatureActions())
+}
+
+export function setNumPlants(numPlants: number): AnyAction {
+  return { type: BOARD_NUM_PLANTS_SET, payload: numPlants }
+}
+
+export function setNumCreatures(numCreatures: number): AnyAction {
+  return { type: BOARD_NUM_CREATURES_SET, payload: numCreatures }
+}
+
+export function setTicksPerGeneration(ticksPerGeneration: number): AnyAction {
+  return { type: BOARD_TICKS_PER_GENERATION_SET, payload: ticksPerGeneration }
+}
+
+export function setBoardSize(size: Dimension): AnyAction {
+  return { type: BOARD_SIZE_SET, payload: size }
 }
 
 const performCreatureActions: () => ThunkAction<

@@ -1,5 +1,12 @@
 import { Reducer } from 'redux'
-import { BOARD_NEXT_TICK, BOARD_NEXT_GENERATION } from '../actions'
+import {
+  BOARD_NEXT_TICK,
+  BOARD_NEXT_GENERATION,
+  BOARD_NUM_PLANTS_SET,
+  BOARD_NUM_CREATURES_SET,
+  BOARD_TICKS_PER_GENERATION_SET,
+  BOARD_SIZE_SET
+} from '../actions'
 import { BoardState } from '../types'
 
 export const initialState: BoardState = {
@@ -25,6 +32,18 @@ export const boardReducer: Reducer<BoardState> = (
 
     case BOARD_NEXT_TICK:
       return { ...state, tick: state.tick + 1 }
+
+    case BOARD_NUM_PLANTS_SET:
+      return { ...state, numPlants: action.payload }
+
+    case BOARD_NUM_CREATURES_SET:
+      return { ...state, numCreatures: action.payload }
+
+    case BOARD_TICKS_PER_GENERATION_SET:
+      return { ...state, ticksPerGeneration: action.payload }
+
+    case BOARD_SIZE_SET:
+      return { ...state, boardSize: action.payload }
 
     default:
       return state
