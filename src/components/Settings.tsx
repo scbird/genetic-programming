@@ -68,7 +68,7 @@ export const Settings: FC = () => {
           </Tooltip>
         </Grid>*/}
         <Grid item lg={6}>
-          <Tooltip title="How many ticks to run per generation when evolving the population. Does not affect manual runs of a generation">
+          <Tooltip title="How many ticks to run per generation when evolving the population. Does not affect population simulator">
             <TextField
               label="Ticks per generation"
               variant="standard"

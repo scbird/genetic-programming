@@ -5,7 +5,8 @@ import {
   CssBaseline,
   Grid,
   Paper,
-  ThemeProvider
+  ThemeProvider,
+  Typography
 } from '@mui/material'
 import type { NextPage } from 'next'
 import React from 'react'
@@ -13,10 +14,12 @@ import { Provider } from 'react-redux'
 import { applyMiddleware, createStore } from 'redux'
 import thunk from 'redux-thunk'
 import { Settings } from '../src/components/Settings'
-import Title from '../src/components/Title'
+import { Training } from '../src/components/Training'
 import { reducer } from '../src/program/reducers'
 
-const mdTheme = createTheme()
+const mdTheme = createTheme({
+  typography: { h1: { fontSize: '2rem' } }
+})
 
 const Home: NextPage = () => {
   const store = createStore(reducer, undefined, applyMiddleware(thunk))
@@ -37,16 +40,19 @@ const Home: NextPage = () => {
           <CssBaseline />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Typography variant="h1">
+                  Genetic programming playground
+                </Typography>
+              </Grid>
               <Grid item xs={12} md={6} xl={8}>
                 <Paper
                   sx={{
                     p: 2,
                     display: 'flex',
-                    flexDirection: 'column',
-                    height: 240
+                    flexDirection: 'column'
                   }}>
-                  <Title>Evolution</Title>
-                  Hi there
+                  <Training />
                 </Paper>
               </Grid>
               <Grid item xs={12} md={6} xl={4}>
