@@ -1,16 +1,20 @@
 import { Reducer } from 'redux'
 import {
+  BOARD_NEXT_GENERATION,
+  BOARD_NEXT_TICK,
   CREATURE_EAT,
   CREATURE_MOVE,
   CREATURE_TURN,
-  DEAD_RESTORE
+  CREATURES_SET_EXPRESSIONS
 } from '../actions'
+import { generate } from '../generate'
 import {
   getCreatures,
   getPlants,
   getRandomHeading,
   getRandomLocation
 } from '../selectors'
+import { stringify } from '../stringify'
 import { BoardState, Creature, Plant } from '../types'
 import { normalizeHeading } from '../util'
 import { initialState } from './board'
@@ -23,7 +27,29 @@ export const creaturesReducer: Reducer<BoardState> = (
   action
 ) => {
   switch (action.type) {
-    case DEAD_RESTORE:
+    case BOARD_NEXT_GENERATION:
+      return {
+        ...state,
+        creatures: Array(state.numCreatures)
+          .fill(null)
+          .map(
+            (_, idx): Creature => {
+              return {
+                id: idx,
+                type: 'creature',
+                expression:
+                  state.creatures[idx]?.expression ?? stringify(generate()),
+                creaturesEaten: 0,
+                plantsEaten: 0,
+                heading: getRandomHeading(),
+                location: getRandomLocation(state),
+                diedAt: null
+              }
+            }
+          )
+      }
+
+    case BOARD_NEXT_TICK:
       return {
         ...state,
         creatures: state.creatures.map((creature) => {
@@ -41,6 +67,15 @@ export const creaturesReducer: Reducer<BoardState> = (
             return creature
           }
         })
+      }
+
+    case CREATURES_SET_EXPRESSIONS:
+      return {
+        ...state,
+        creatures: state.creatures.map((creature) => ({
+          ...creature,
+          expression: action.payload[creature.id] ?? creature.expression
+        }))
       }
 
     case CREATURE_TURN:

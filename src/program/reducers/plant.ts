@@ -1,11 +1,10 @@
 import { Reducer } from 'redux'
-import { CREATURE_EAT, DEAD_RESTORE } from '../actions'
 import {
-  getCreatures,
-  getPlants,
-  getRandomHeading,
-  getRandomLocation
-} from '../selectors'
+  BOARD_NEXT_GENERATION,
+  BOARD_NEXT_TICK,
+  CREATURE_EAT
+} from '../actions'
+import { getCreatures, getPlants, getRandomLocation } from '../selectors'
 import { BoardState, Creature, Plant } from '../types'
 import { initialState } from './board'
 
@@ -14,24 +13,42 @@ export const plantsReducer: Reducer<BoardState> = (
   action
 ) => {
   switch (action.type) {
-    case DEAD_RESTORE:
+    case BOARD_NEXT_GENERATION:
       return {
         ...state,
-        plants: getPlants(state).map((plant) => {
-          if (
-            plant.diedAt !== null &&
-            state.tick > plant.diedAt + state.plantRestoreDelay
-          ) {
-            return {
-              ...plant,
-              diedAt: null,
-              location: getRandomLocation(state),
-              heading: getRandomHeading()
+        plants: Array(state.numPlants)
+          .fill(null)
+          .map(
+            (_, idx): Plant => {
+              return {
+                id: idx,
+                type: 'plant',
+                location: getRandomLocation(state),
+                diedAt: null
+              }
             }
-          } else {
-            return plant
+          )
+      }
+
+    case BOARD_NEXT_TICK:
+      return {
+        ...state,
+        plants: getPlants(state).map(
+          (plant): Plant => {
+            if (
+              plant.diedAt !== null &&
+              state.tick > plant.diedAt + state.plantRestoreDelay
+            ) {
+              return {
+                ...plant,
+                diedAt: null,
+                location: getRandomLocation(state)
+              }
+            } else {
+              return plant
+            }
           }
-        })
+        )
       }
 
     case CREATURE_EAT:

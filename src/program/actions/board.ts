@@ -1,19 +1,27 @@
 import { AnyAction } from 'redux'
 import { ThunkAction } from 'redux-thunk'
-import { getRequestedAction } from '../getRequestedAction'
-import { getCreatures } from '../selectors'
+import { getDesiredActions, getMutatedExpressions } from '../selectors'
 import { BoardState } from '../types'
+import { setExpressions } from './creature'
 
-export const DEAD_RESTORE = 'DEAD_RESTORE'
-
-export const restoreDeadPlantsAndCreatures = (): AnyAction => ({
-  type: DEAD_RESTORE
-})
+export const BOARD_NEXT_TICK = 'BOARD_NEXT_TICK'
+export const BOARD_NEXT_GENERATION = 'BOARD_NEXT_GENERATION'
 
 export const step: () => ThunkAction<void, BoardState, any, any> = () => (
-  dispatch
+  dispatch,
+  getState
 ) => {
-  dispatch(restoreDeadPlantsAndCreatures())
+  const state = getState()
+
+  if (state.tick === state.ticksPerGeneration) {
+    dispatch(mutateCreatures())
+  }
+
+  if (state.generation === 0 || state.tick === state.ticksPerGeneration) {
+    dispatch(nextGeneration())
+  }
+
+  dispatch(nextTick())
   dispatch(performCreatureActions())
 }
 
@@ -24,18 +32,33 @@ const performCreatureActions: () => ThunkAction<
   any
 > = () => {
   return (dispatch, getState) => {
-    const state = getState()
-    const actions = getCreatures(state)
-      .filter((creature) => creature.diedAt === null)
-      .map((creature) => getRequestedAction(state, creature.id))
-      .filter((action): action is AnyAction => action !== null)
+    // Get the actions the creatures wish to perform
+    const actions = getDesiredActions(getState())
 
     // Perform the actions in non-deterministic order, so that creatures with lower IDs don't
     // have an advantage over ones with higher IDs
     shuffle(actions)
 
+    // Perform the requested actions
     actions.forEach((action) => dispatch(action))
   }
+}
+
+const mutateCreatures: () => ThunkAction<void, BoardState, any, any> = () => (
+  dispatch,
+  getState
+) => {
+  const expressions = getMutatedExpressions(getState())
+
+  dispatch(setExpressions(expressions))
+}
+
+function nextGeneration(): AnyAction {
+  return { type: BOARD_NEXT_GENERATION }
+}
+
+function nextTick(): AnyAction {
+  return { type: BOARD_NEXT_TICK }
 }
 
 function shuffle<T>(items: T[]) {

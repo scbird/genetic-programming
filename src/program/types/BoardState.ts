@@ -3,11 +3,14 @@ import { Dimension } from './Dimension'
 import { Plant } from './Plant'
 
 export interface BoardState {
+  generation: number
   tick: number
-  ticksPerRound: number
+  ticksPerGeneration: number
   creatures: Creature[]
   plants: Plant[]
   boardSize: Dimension
-  plantRestoreDelay: 5
-  creatureRestoreDelay: 5
+  plantRestoreDelay: number
+  creatureRestoreDelay: number
+  numPlants: number
+  numCreatures: number
 }
