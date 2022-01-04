@@ -7,6 +7,7 @@ export interface Creature {
   expression: string
   diedAt: number | null
   location: Point
+  /** Which way the creature is facing. In the range of [-PI, PI), 0 means pointing east */
   heading: number
   requestedAction: AnyAction | null
   creaturesEaten: number

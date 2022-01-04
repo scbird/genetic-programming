@@ -74,16 +74,16 @@ function getWouldEatObject<T extends HasLocation>(
   const objectDistances = objects
     .map((curr) => [curr, getDistance(creature, curr)] as [T, number])
     .filter(([curr, distance]) => {
+      const headingToObject = getHeading(creature, curr)
+      const angleToObject = normalizeHeading(creature.heading - headingToObject)
+
       return (
-        distance <= MAX_EAT_DISTANCE &&
-        Math.abs(
-          normalizeHeading(creature.heading - getHeading(creature, curr))
-        ) <= MAX_EAT_ANGLE
+        distance <= MAX_EAT_DISTANCE && Math.abs(angleToObject) <= MAX_EAT_ANGLE
       )
     })
     .sort((a, b) => a[1] - b[1])
 
-  return objectDistances[0][0] ?? null
+  return objectDistances[0]?.[0] ?? null
 }
 
 function getClosestCreatureTo(state: BoardState, id: number): Creature {

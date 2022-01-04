@@ -28,16 +28,10 @@ export function getDistance(from: HasLocation, to: HasLocation): number {
 }
 
 export function getHeading(from: HasLocation, to: HasLocation): number {
-  const theta = Math.atan2(
-    to.location.x - from.location.x,
-    from.location.y - to.location.y
+  return Math.atan2(
+    to.location.y - from.location.y,
+    to.location.x - from.location.x
   )
-
-  if (theta < 0.0) {
-    return theta + Math.PI * 2
-  } else {
-    return theta
-  }
 }
 
 export function normalizeHeading(heading: number) {

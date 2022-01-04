@@ -53,7 +53,23 @@ describe('compile', () => {
   it('should only evaluate required parts of the tree', () => {
     const node = parse('if(4, eat(), turn(30))')
     const compiled = compile(node)
-    const state = {} as BoardState
+    const state = {
+      creatures: [
+        {
+          id: 0,
+          type: 'creature',
+          location: { x: 0, y: 0 },
+          heading: 0
+        },
+        {
+          id: 1,
+          type: 'creature',
+          location: { x: 0.5, y: 0 },
+          heading: -Math.PI
+        }
+      ],
+      plants: [{ id: 0, type: 'plant', location: { x: 5, y: 5 } }]
+    } as BoardState
     const requestedActions: AnyAction[] = []
     const getResult = compiled(
       state,
@@ -66,13 +82,28 @@ describe('compile', () => {
     )
 
     expect(getResult()).toBe(0)
-    expect(requestedActions).toEqual([eat(1)])
+    expect(requestedActions).toEqual([eat(1, 'creature', 0)])
   })
 
   it('should halt evaluations once an action is performed', () => {
     const node = parse('add(eat(), turn(30))')
     const compiled = compile(node)
-    const state = {} as BoardState
+    const state = {
+      creatures: [
+        {
+          id: 0,
+          type: 'creature',
+          location: { x: 0, y: 0 },
+          heading: 0
+        },
+        {
+          id: 1,
+          type: 'creature',
+          location: { x: 0.5, y: 0 },
+          heading: -Math.PI
+        }
+      ]
+    } as BoardState
     const requestedActions: AnyAction[] = []
     const getResult = compiled(
       state,
@@ -85,6 +116,6 @@ describe('compile', () => {
     )
 
     expect(getResult()).toBe(0)
-    expect(requestedActions).toEqual([eat(1)])
+    expect(requestedActions).toEqual([eat(1, 'creature', 0)])
   })
 })
