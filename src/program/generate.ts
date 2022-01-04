@@ -1,23 +1,26 @@
 import { operators } from './operators'
-import { Node, Operator, OperatorNode, TerminalNode } from './types/types'
+import { Node, Operator, OperatorNode, TerminalNode } from './types'
 
 const MAX_DEPTH = 20
 const TERMINAL_RANGE = 5
 
-export function generate(depth = 0): Node {
-  if (Math.random() < getOperatorProbability(depth)) {
+export function generate(depth = 0, maxDepth = MAX_DEPTH): Node {
+  if (Math.random() < getOperatorProbability(depth, maxDepth)) {
     return generateOperator(depth)
   } else {
     return generateTerminal()
   }
 }
 
-function getOperatorProbability(depth: number) {
-  return 1 - depth / MAX_DEPTH
+function getOperatorProbability(depth: number, maxDepth: number) {
+  return 1 - depth / maxDepth
 }
 
 function generateTerminal(): TerminalNode {
-  return { type: 'terminal', value: TERMINAL_RANGE * (Math.random() * 2 - 1) }
+  return {
+    type: 'terminal',
+    value: TERMINAL_RANGE * ((Math.random() - 0.5) * 2)
+  }
 }
 
 function generateOperator(depth: number): OperatorNode {
