@@ -5,7 +5,12 @@ import {
   CREATURE_TURN,
   DEAD_RESTORE
 } from '../actions'
-import { getCreatures, getPlants } from '../selectors'
+import {
+  getCreatures,
+  getPlants,
+  getRandomHeading,
+  getRandomLocation
+} from '../selectors'
 import { BoardState, Creature, Plant } from '../types'
 import { normalizeHeading } from '../util'
 import { initialState } from './board'
@@ -26,7 +31,12 @@ export const creaturesReducer: Reducer<BoardState> = (
             creature.diedAt !== null &&
             state.tick > creature.diedAt + state.creatureRestoreDelay
           ) {
-            return { ...creature, diedAt: null }
+            return {
+              ...creature,
+              diedAt: null,
+              location: getRandomLocation(state),
+              heading: getRandomHeading()
+            }
           } else {
             return creature
           }

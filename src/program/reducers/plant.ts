@@ -1,6 +1,11 @@
 import { Reducer } from 'redux'
 import { CREATURE_EAT, DEAD_RESTORE } from '../actions'
-import { getCreatures, getPlants } from '../selectors'
+import {
+  getCreatures,
+  getPlants,
+  getRandomHeading,
+  getRandomLocation
+} from '../selectors'
 import { BoardState, Creature, Plant } from '../types'
 import { initialState } from './board'
 
@@ -17,7 +22,12 @@ export const plantsReducer: Reducer<BoardState> = (
             plant.diedAt !== null &&
             state.tick > plant.diedAt + state.plantRestoreDelay
           ) {
-            return { ...plant, diedAt: null }
+            return {
+              ...plant,
+              diedAt: null,
+              location: getRandomLocation(state),
+              heading: getRandomHeading()
+            }
           } else {
             return plant
           }
