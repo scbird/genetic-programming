@@ -1,5 +1,6 @@
 import { Box } from '@mui/material'
 import React, { FC } from 'react'
+import { useSelector } from 'react-redux'
 import {
   ResponsiveContainer,
   BarChart,
@@ -9,12 +10,14 @@ import {
   Tooltip,
   Bar
 } from 'recharts'
-
-const data = Array(10)
-  .fill(null)
-  .map((_, idx) => ({ name: idx, Score: Math.random() * 500 }))
+import { getGenerationScores } from '../../program/selectors'
 
 export const Chart: FC = () => {
+  const data = useSelector(getGenerationScores).map((score, generation) => ({
+    name: generation,
+    Score: score
+  }))
+
   return (
     <Box sx={{ height: '200px' }}>
       <ResponsiveContainer>

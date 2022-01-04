@@ -1,32 +1,34 @@
 import { AnyAction } from 'redux'
 import { ThunkAction } from 'redux-thunk'
-import { getDesiredActions, getMutatedExpressions } from '../selectors'
+import { getDesiredActions } from '../selectors'
 import { BoardState, Dimension } from '../types'
-import { setExpressions } from './creature'
 
+export const BOARD_RESET_POPULATION = 'BOARD_RESET_POPULATION'
+export const BOARD_SET_GENERATION = 'BOARD_SET_GENERATION'
 export const BOARD_NEXT_TICK = 'BOARD_NEXT_TICK'
-export const BOARD_NEXT_GENERATION = 'BOARD_NEXT_GENERATION'
 export const BOARD_NUM_PLANTS_SET = 'BOARD_NUM_PLANTS_SET'
 export const BOARD_NUM_CREATURES_SET = 'BOARD_NUM_CREATURES_SET'
 export const BOARD_TICKS_PER_GENERATION_SET = 'BOARD_TICKS_PER_GENERATION_SET'
 export const BOARD_SIZE_SET = 'BOARD_SIZE_SET'
 
 export const step: () => ThunkAction<void, BoardState, any, any> = () => (
-  dispatch,
-  getState
+  dispatch
 ) => {
-  const state = getState()
-
-  if (state.tick === state.ticksPerGeneration) {
-    dispatch(mutateCreatures())
-  }
-
-  if (state.generation === 0 || state.tick === state.ticksPerGeneration) {
-    dispatch(nextGeneration())
-  }
-
   dispatch(nextTick())
   dispatch(performCreatureActions())
+}
+
+export function setGeneration(
+  generation: number
+): ThunkAction<void, BoardState, any, any> {
+  return (dispatch) => {
+    dispatch({ type: BOARD_SET_GENERATION, payload: generation })
+    dispatch(resetPopulation())
+  }
+}
+
+export function resetPopulation(): AnyAction {
+  return { type: BOARD_RESET_POPULATION }
 }
 
 export function setNumPlants(numPlants: number): AnyAction {
@@ -62,19 +64,6 @@ const performCreatureActions: () => ThunkAction<
     // Perform the requested actions
     actions.forEach((action) => dispatch(action))
   }
-}
-
-const mutateCreatures: () => ThunkAction<void, BoardState, any, any> = () => (
-  dispatch,
-  getState
-) => {
-  const expressions = getMutatedExpressions(getState())
-
-  dispatch(setExpressions(expressions))
-}
-
-function nextGeneration(): AnyAction {
-  return { type: BOARD_NEXT_GENERATION }
 }
 
 function nextTick(): AnyAction {

@@ -1,6 +1,6 @@
 import { Reducer } from 'redux'
 import {
-  BOARD_NEXT_GENERATION,
+  BOARD_RESET_POPULATION,
   BOARD_NEXT_TICK,
   CREATURE_EAT
 } from '../actions'
@@ -13,7 +13,7 @@ export const plantsReducer: Reducer<BoardState> = (
   action
 ) => {
   switch (action.type) {
-    case BOARD_NEXT_GENERATION:
+    case BOARD_RESET_POPULATION:
       return {
         ...state,
         plants: Array(state.numPlants)

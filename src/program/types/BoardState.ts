@@ -1,5 +1,6 @@
 import { Creature } from './Creature'
 import { Dimension } from './Dimension'
+import { Generation } from './Generation'
 import { Plant } from './Plant'
 
 export interface BoardState {
@@ -13,4 +14,5 @@ export interface BoardState {
   creatureRestoreDelay: number
   numPlants: number
   numCreatures: number
+  generations: Generation[]
 }

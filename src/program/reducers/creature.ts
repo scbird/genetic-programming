@@ -1,20 +1,18 @@
 import { Reducer } from 'redux'
 import {
-  BOARD_NEXT_GENERATION,
   BOARD_NEXT_TICK,
+  BOARD_RESET_POPULATION,
   CREATURE_EAT,
   CREATURE_MOVE,
   CREATURE_TURN,
   CREATURES_SET_EXPRESSIONS
 } from '../actions'
-import { generate } from '../generate'
 import {
   getCreatures,
   getPlants,
   getRandomHeading,
   getRandomLocation
 } from '../selectors'
-import { stringify } from '../stringify'
 import { BoardState, Creature, Plant } from '../types'
 import { normalizeHeading } from '../util'
 import { initialState } from './board'
@@ -27,7 +25,9 @@ export const creaturesReducer: Reducer<BoardState> = (
   action
 ) => {
   switch (action.type) {
-    case BOARD_NEXT_GENERATION:
+    case BOARD_RESET_POPULATION:
+      const generation = state.generations[state.generation]
+
       return {
         ...state,
         creatures: Array(state.numCreatures)
@@ -38,7 +38,8 @@ export const creaturesReducer: Reducer<BoardState> = (
                 id: idx,
                 type: 'creature',
                 expression:
-                  state.creatures[idx]?.expression ?? stringify(generate()),
+                  generation.creatures[idx % generation.creatures.length]
+                    .expression,
                 creaturesEaten: 0,
                 plantsEaten: 0,
                 heading: getRandomHeading(),
