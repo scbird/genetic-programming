@@ -11,9 +11,9 @@ describe('Board actions', () => {
       reducer,
       {
         ...initialState,
-        numPlants: 20,
-        numCreatures: 20,
-        boardSize: { width: 10, height: 10 }
+        numPlants: 50,
+        numCreatures: 50,
+        boardSize: { width: 15, height: 15 }
       },
       applyMiddleware(thunk)
     )
@@ -26,12 +26,15 @@ describe('Board actions', () => {
 
       if (state.tick === state.ticksPerGeneration) {
         console.log(
-          state.generation,
-          state.tick,
+          getCreatures(state).map((creature) => ({
+            plants: creature.plantsEaten,
+            creatures: creature.creaturesEaten
+          })),
           getCreatures(state).reduce(
             (acc, creature) => acc + getCreatureScore(creature),
             0
-          )
+          ),
+          state.generation
         )
       }
     }

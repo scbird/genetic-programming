@@ -6,8 +6,8 @@ import { plantsReducer } from './plant'
 
 export const reducer: Reducer<BoardState> = (state = initialState, action) => {
   state = boardReducer(state, action)
-  state = plantsReducer(state, action)
   state = creaturesReducer(state, action)
+  state = plantsReducer(state, action)
 
   return state
 }
