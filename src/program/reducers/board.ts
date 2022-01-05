@@ -36,7 +36,11 @@ export const boardReducer: Reducer<BoardState> = (
       return { ...state, tick: 0 }
 
     case BOARD_SET_GENERATION:
-      return { ...state, generation: action.payload }
+      return {
+        ...state,
+        generation: action.payload,
+        tick: state.generations[action.payload].tick
+      }
 
     case BOARD_NEXT_TICK:
       return { ...state, tick: state.tick + 1 }

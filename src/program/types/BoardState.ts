@@ -7,13 +7,13 @@ export interface BoardState {
   generation: number
   tick: number
   ticksPerGeneration: number
-  creatures: Creature[]
-  plants: Plant[]
+  creatures: readonly Creature[]
+  plants: readonly Plant[]
   boardSize: Dimension
   plantRestoreDelay: number
   creatureRestoreDelay: number
   numPlants: number
   numCreatures: number
-  generations: Generation[]
+  generations: readonly Generation[]
   training: boolean
 }

@@ -1,11 +1,9 @@
 import { Creature } from './Creature'
-
-export type GenerationCreature = Pick<
-  Creature,
-  'expression' | 'creaturesEaten' | 'plantsEaten'
->
+import { Plant } from './Plant'
 
 export interface Generation {
-  creatures: GenerationCreature[]
+  creatures: readonly Creature[]
+  plants: readonly Plant[]
+  tick: number
   totalScore: number
 }

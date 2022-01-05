@@ -18,13 +18,8 @@ export const step: () => ThunkAction<void, BoardState, any, any> = () => (
   dispatch(performCreatureActions())
 }
 
-export function setGeneration(
-  generation: number
-): ThunkAction<void, BoardState, any, any> {
-  return (dispatch) => {
-    dispatch({ type: BOARD_SET_GENERATION, payload: generation })
-    dispatch(resetPopulation())
-  }
+export function setGeneration(generation: number): AnyAction {
+  return { type: BOARD_SET_GENERATION, payload: generation }
 }
 
 export function resetPopulation(): AnyAction {

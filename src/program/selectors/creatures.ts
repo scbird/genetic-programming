@@ -1,6 +1,6 @@
 import { AnyAction } from 'redux'
 import { getRequestedAction } from '../getRequestedAction'
-import { BoardState, Creature, GenerationCreature, Plant } from '../types'
+import { BoardState, Creature, Plant } from '../types'
 import {
   getDistance,
   getHeading,
@@ -65,7 +65,7 @@ export function getDesiredActions(state: BoardState): AnyAction[] {
     .filter((action): action is AnyAction => action !== null)
 }
 
-export function getCreatureScore(creature: GenerationCreature): number {
+export function getCreatureScore(creature: Creature): number {
   return (
     creature.creaturesEaten * CREATURE_SCORE +
     creature.plantsEaten * PLANT_SCORE

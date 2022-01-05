@@ -6,7 +6,7 @@ import { setGeneration, step } from './board'
 
 export const GENERATIONS_CLEAR = 'GENERATIONS_CLEAR'
 export const GENERATION_PREPARE_NEXT = 'GENERATION_PREPARE_NEXT'
-export const GENERATION_UPDATE_SCORES = 'GENERATION_UPDATE_SCORES'
+export const GENERATION_COMPLETE = 'GENERATION_COMPLETE'
 export const TRAINING_SET = 'TRAINING_SET'
 
 export const resetTraining: () => ThunkAction<
@@ -33,7 +33,7 @@ export const trainNextGeneration: () => ThunkAction<
     dispatch(step())
   }
 
-  dispatch(updateScores())
+  dispatch(completeGeneration())
   console.log(Date.now() - start)
 }
 
@@ -74,6 +74,6 @@ function prepareNextGeneration(): AnyAction {
   return { type: GENERATION_PREPARE_NEXT }
 }
 
-function updateScores(): AnyAction {
-  return { type: GENERATION_UPDATE_SCORES }
+function completeGeneration(): AnyAction {
+  return { type: GENERATION_COMPLETE }
 }

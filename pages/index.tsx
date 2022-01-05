@@ -15,14 +15,17 @@ import { applyMiddleware, createStore } from 'redux'
 import thunk from 'redux-thunk'
 import { Settings } from '../src/components/Settings'
 import { Training } from '../src/components/Training'
+import { resetTraining } from '../src/program/actions'
 import { reducer } from '../src/program/reducers'
+import { initialState } from '../src/program/reducers/board'
 
 const mdTheme = createTheme({
   typography: { h1: { fontSize: '2rem' } }
 })
 
 const Home: NextPage = () => {
-  const store = createStore(reducer, undefined, applyMiddleware(thunk))
+  const store = createStore(reducer, initialState, applyMiddleware(thunk))
+  store.dispatch(resetTraining() as any)
 
   return (
     <Provider store={store}>

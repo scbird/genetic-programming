@@ -2,7 +2,8 @@ import { Reducer } from 'redux'
 import {
   BOARD_RESET_POPULATION,
   BOARD_NEXT_TICK,
-  CREATURE_EAT
+  CREATURE_EAT,
+  BOARD_SET_GENERATION
 } from '../actions'
 import { getCreatures, getPlants, getRandomLocation } from '../selectors'
 import { BoardState, Creature, Plant } from '../types'
@@ -13,21 +14,18 @@ export const plantsReducer: Reducer<BoardState> = (
   action
 ) => {
   switch (action.type) {
+    case BOARD_SET_GENERATION:
+      return {
+        ...state,
+        plants: state.generations[action.payload].plants
+      }
+
     case BOARD_RESET_POPULATION:
       return {
         ...state,
         plants: Array(state.numPlants)
           .fill(null)
-          .map(
-            (_, idx): Plant => {
-              return {
-                id: idx,
-                type: 'plant',
-                location: getRandomLocation(state),
-                diedAt: null
-              }
-            }
-          )
+          .map((_, idx): Plant => createPlant(state, idx))
       }
 
     case BOARD_NEXT_TICK:
@@ -78,5 +76,14 @@ export const plantsReducer: Reducer<BoardState> = (
 
     default:
       return state
+  }
+}
+
+export function createPlant(state: BoardState, id: number): Plant {
+  return {
+    id,
+    type: 'plant',
+    location: getRandomLocation(state),
+    diedAt: null
   }
 }
