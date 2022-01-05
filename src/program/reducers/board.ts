@@ -6,7 +6,9 @@ import {
   BOARD_NUM_CREATURES_SET,
   BOARD_TICKS_PER_GENERATION_SET,
   BOARD_SIZE_SET,
-  BOARD_SET_GENERATION
+  BOARD_SET_GENERATION,
+  TRAINING_SET,
+  GENERATIONS_CLEAR
 } from '../actions'
 import { BoardState } from '../types'
 
@@ -21,7 +23,8 @@ export const initialState: BoardState = {
   creatureRestoreDelay: 5,
   numCreatures: 20,
   numPlants: 20,
-  generations: []
+  generations: [],
+  training: false
 }
 
 export const boardReducer: Reducer<BoardState> = (
@@ -49,6 +52,12 @@ export const boardReducer: Reducer<BoardState> = (
 
     case BOARD_SIZE_SET:
       return { ...state, boardSize: action.payload }
+
+    case TRAINING_SET:
+      return { ...state, training: action.payload }
+
+    case GENERATIONS_CLEAR:
+      return { ...state, training: false }
 
     default:
       return state

@@ -16,18 +16,13 @@ import thunk from 'redux-thunk'
 import { Settings } from '../src/components/Settings'
 import { Training } from '../src/components/Training'
 import { reducer } from '../src/program/reducers'
-import { composeWithDevTools } from 'redux-devtools-extension'
 
 const mdTheme = createTheme({
   typography: { h1: { fontSize: '2rem' } }
 })
 
 const Home: NextPage = () => {
-  const store = createStore(
-    reducer,
-    undefined,
-    composeWithDevTools(applyMiddleware(thunk))
-  )
+  const store = createStore(reducer, undefined, applyMiddleware(thunk))
 
   return (
     <Provider store={store}>

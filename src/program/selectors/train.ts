@@ -1,3 +1,4 @@
+import { createSelector } from 'reselect'
 import { mutate } from '../mutate'
 import { parse } from '../parse'
 import { stringify } from '../stringify'
@@ -7,8 +8,8 @@ import { getCreatureScore } from './creatures'
 
 const KEEP_PORTION = 0.5
 
-export function getCurrentGeneration(state: BoardState): Generation {
-  return state.generations[state.generations.length - 1]
+export function isTraining(state: BoardState): boolean {
+  return state.training
 }
 
 export function getMutatedExpressions(state: BoardState): string[] {
@@ -47,8 +48,13 @@ export function getMutatedExpressions(state: BoardState): string[] {
   return expressions
 }
 
-export function getGenerationScores(state: BoardState): number[] {
-  return state.generations.map(({ totalScore }) => totalScore)
+export const getGenerationScores = createSelector(
+  getGenerations,
+  (generations) => generations.map(({ totalScore }) => totalScore)
+)
+
+export function getGenerations(state: BoardState): readonly Generation[] {
+  return state.generations
 }
 
 /**

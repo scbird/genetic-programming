@@ -1,12 +1,13 @@
 import { AnyAction } from 'redux'
 import { ThunkAction } from 'redux-thunk'
-import { getTick, getTicksPerGeneration } from '../selectors'
+import { getTick, getTicksPerGeneration, isTraining } from '../selectors'
 import { BoardState } from '../types'
 import { setGeneration, step } from './board'
 
 export const GENERATIONS_CLEAR = 'GENERATIONS_CLEAR'
 export const GENERATION_PREPARE_NEXT = 'GENERATION_PREPARE_NEXT'
 export const GENERATION_UPDATE_SCORES = 'GENERATION_UPDATE_SCORES'
+export const TRAINING_SET = 'TRAINING_SET'
 
 export const resetTraining: () => ThunkAction<
   void,
@@ -24,6 +25,7 @@ export const trainNextGeneration: () => ThunkAction<
   any,
   any
 > = () => (dispatch, getState) => {
+  const start = Date.now()
   dispatch(prepareNextGeneration())
   dispatch(setGeneration(getState().generations.length - 1))
 
@@ -32,6 +34,36 @@ export const trainNextGeneration: () => ThunkAction<
   }
 
   dispatch(updateScores())
+  console.log(Date.now() - start)
+}
+
+export function startTraining(): ThunkAction<void, BoardState, any, any> {
+  return (dispatch, getState) => {
+    if (isTraining(getState())) {
+      return
+    }
+
+    dispatch(setTraining(true))
+    train()
+
+    function train() {
+      dispatch(trainNextGeneration())
+
+      setTimeout(() => {
+        if (isTraining(getState())) {
+          train()
+        }
+      })
+    }
+  }
+}
+
+export function stopTraining(): AnyAction {
+  return setTraining(false)
+}
+
+function setTraining(training: boolean): AnyAction {
+  return { type: TRAINING_SET, payload: training }
 }
 
 function clearGenerations(): AnyAction {

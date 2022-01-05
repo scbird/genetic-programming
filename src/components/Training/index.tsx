@@ -1,13 +1,20 @@
 import { PlayArrow, RestartAlt, SkipNext } from '@mui/icons-material'
 import { Box, IconButton, Stack } from '@mui/material'
 import React, { FC } from 'react'
-import { useDispatch } from 'react-redux'
-import { resetTraining, trainNextGeneration } from '../../program/actions'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  resetTraining,
+  startTraining,
+  stopTraining,
+  trainNextGeneration
+} from '../../program/actions'
+import { isTraining } from '../../program/selectors'
 import Title from '../Title'
 import { Chart } from './Chart'
 
 export const Training: FC = () => {
   const dispatch = useDispatch()
+  const training = useSelector(isTraining)
 
   return (
     <>
@@ -27,7 +34,11 @@ export const Training: FC = () => {
             onClick={() => dispatch(trainNextGeneration())}>
             <SkipNext />
           </IconButton>
-          <IconButton color="primary">
+          <IconButton
+            color={training ? 'secondary' : 'primary'}
+            onClick={() =>
+              dispatch(training ? stopTraining() : startTraining())
+            }>
             <PlayArrow />
           </IconButton>
         </Stack>

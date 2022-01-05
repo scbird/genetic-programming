@@ -15,4 +15,5 @@ export interface BoardState {
   numPlants: number
   numCreatures: number
   generations: Generation[]
+  training: boolean
 }

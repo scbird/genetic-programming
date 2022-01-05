@@ -46,7 +46,7 @@ export const Chart: FC = () => {
             formatter={(value: number) => [value, 'Total score']}
             labelFormatter={(label) => `Generation ${label}`}
           />
-          <Bar dataKey="Score" fill="#8884d8" />
+          <Bar dataKey="Score" fill="#8884d8" isAnimationActive={false} />
         </BarChart>
       </ResponsiveContainer>
     </Box>
