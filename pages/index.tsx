@@ -13,6 +13,7 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import { applyMiddleware, createStore } from 'redux'
 import thunk from 'redux-thunk'
+import { Population } from '../src/components/Population'
 import { Settings } from '../src/components/Settings'
 import { Training } from '../src/components/Training'
 import { resetTraining } from '../src/program/actions'
@@ -73,10 +74,9 @@ const Home: NextPage = () => {
                   sx={{
                     p: 2,
                     display: 'flex',
-                    flexDirection: 'column',
-                    height: 240
+                    flexDirection: 'column'
                   }}>
-                  Hi there
+                  <Population />
                 </Paper>
               </Grid>
             </Grid>

@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
 import React, { FC } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   ResponsiveContainer,
   BarChart,
@@ -10,9 +10,11 @@ import {
   Tooltip,
   Bar
 } from 'recharts'
+import { setGeneration } from '../../program/actions'
 import { getGenerationScores } from '../../program/selectors'
 
 export const Chart: FC = () => {
+  const dispatch = useDispatch()
   const data = useSelector(getGenerationScores).map((score, generation) => ({
     name: generation,
     Score: score
@@ -24,7 +26,7 @@ export const Chart: FC = () => {
         <BarChart
           data={data}
           onClick={({ activeLabel }: { activeLabel: number }) => {
-            console.log(activeLabel)
+            dispatch(setGeneration(activeLabel))
           }}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
