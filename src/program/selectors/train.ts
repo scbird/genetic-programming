@@ -11,13 +11,8 @@ export function isTraining(state: BoardState): boolean {
 }
 
 export function getMutatedExpressions(state: BoardState): string[] {
-  // Ensures all creatures have a chance at being selected, even if they didn't eat anything
-  const BASE_SCORE = 0.1
-
   const creatures = state.generations[state.generations.length - 1].creatures
-  const scores = creatures.map(
-    (creature) => getCreatureScore(creature) + BASE_SCORE
-  )
+  const scores = creatures.map((creature) => getCreatureScore(creature))
 
   // Get the expressions in order of score
   const bestExpressions = scores
@@ -38,7 +33,11 @@ export function getMutatedExpressions(state: BoardState): string[] {
 
   // Add mutated expressions until we have a new expression for every creature
   while (expressions.length < getNumCreatures(state)) {
-    const parentIdx = choose(scores)
+    // We use log() so that super-fit individuals don't have a massive advantage
+    // over others. We add Math.E so that the minimum weight is 1 - we want all
+    // creatures to have a chance at reproducing, even if they didn't eat anything
+    const weights = scores.map((score) => Math.log(score + Math.E))
+    const parentIdx = choose(weights)
     const originalExpression = creatures[parentIdx].expression
     const mutatedExpression = stringify(
       mutate(parse(originalExpression), getMutationRate(state))
