@@ -28,14 +28,10 @@ export function getCreatures(state: BoardState): readonly Creature[] {
   return state.creatures
 }
 
-export function getGenerationCreatures(state: BoardState): readonly Creature[] {
-  return state.generations[state.generation].creatures
-}
-
 export function getPlants(state: BoardState): readonly Plant[] {
   return state.plants
 }
 
-export function getGenerationPlants(state: BoardState): readonly Plant[] {
-  return state.generations[state.generation].plants
+export function isRunning(state: BoardState): boolean {
+  return state.running
 }

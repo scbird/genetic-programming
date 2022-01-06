@@ -16,4 +16,5 @@ export interface BoardState {
   numCreatures: number
   generations: readonly Generation[]
   training: boolean
+  running: boolean
 }

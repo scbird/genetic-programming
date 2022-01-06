@@ -1,4 +1,4 @@
-import { Box } from '@mui/material'
+import { Box, Stack, Typography } from '@mui/material'
 import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -33,6 +33,11 @@ export const Training: FC = () => {
         </Box>
       </Box>
       <Chart />
+      <Stack mt={3} alignItems="center">
+        <Typography variant={'muted' as any}>
+          Click on a generation to view its population
+        </Typography>
+      </Stack>
     </>
   )
 }

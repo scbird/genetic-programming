@@ -21,7 +21,10 @@ import { reducer } from '../src/program/reducers'
 import { initialState } from '../src/program/reducers/board'
 
 const mdTheme = createTheme({
-  typography: { h1: { fontSize: '2rem' } }
+  typography: () => ({
+    h1: { fontSize: '2rem' },
+    muted: { fontSize: '0.8rem', color: '#888' }
+  })
 })
 
 const Home: NextPage = () => {

@@ -1,6 +1,6 @@
 import { AnyAction } from 'redux'
 import { ThunkAction } from 'redux-thunk'
-import { getDesiredActions } from '../selectors'
+import { getDesiredActions, isRunning } from '../selectors'
 import { BoardState, Dimension } from '../types'
 
 export const BOARD_RESET_POPULATION = 'BOARD_RESET_POPULATION'
@@ -10,6 +10,7 @@ export const BOARD_NUM_PLANTS_SET = 'BOARD_NUM_PLANTS_SET'
 export const BOARD_NUM_CREATURES_SET = 'BOARD_NUM_CREATURES_SET'
 export const BOARD_TICKS_PER_GENERATION_SET = 'BOARD_TICKS_PER_GENERATION_SET'
 export const BOARD_SIZE_SET = 'BOARD_SIZE_SET'
+export const RUNNING_SET = 'RUNNING_SET'
 
 export const step: () => ThunkAction<void, BoardState, any, any> = () => (
   dispatch
@@ -40,6 +41,35 @@ export function setTicksPerGeneration(ticksPerGeneration: number): AnyAction {
 
 export function setBoardSize(size: Dimension): AnyAction {
   return { type: BOARD_SIZE_SET, payload: size }
+}
+
+export function startRunning(): ThunkAction<void, BoardState, any, any> {
+  return (dispatch, getState) => {
+    if (isRunning(getState())) {
+      return
+    }
+
+    dispatch(setRunning(true))
+    run()
+
+    function run() {
+      dispatch(step())
+
+      setTimeout(() => {
+        if (isRunning(getState())) {
+          run()
+        }
+      })
+    }
+  }
+}
+
+export function stopRunning(): AnyAction {
+  return setRunning(false)
+}
+
+function setRunning(running: boolean): AnyAction {
+  return { type: RUNNING_SET, payload: running }
 }
 
 const performCreatureActions: () => ThunkAction<

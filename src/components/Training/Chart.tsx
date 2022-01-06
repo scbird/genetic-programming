@@ -26,7 +26,11 @@ export const Chart: FC = () => {
         <BarChart
           data={data}
           onClick={({ activeLabel }: { activeLabel: number }) => {
-            dispatch(setGeneration(activeLabel))
+            // Ignore clicks on the "auto" column that the bar
+            // generates when there's only one generation
+            if (data[activeLabel]) {
+              dispatch(setGeneration(activeLabel))
+            }
           }}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
