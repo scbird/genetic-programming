@@ -36,16 +36,10 @@ const Home: NextPage = () => {
       <ThemeProvider theme={mdTheme}>
         <Box
           sx={{
-            display: 'flex',
-            backgroundColor: (theme) => theme.palette.grey[100],
-            position: 'absolute',
-            top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0
+            backgroundColor: (theme) => theme.palette.grey[100]
           }}>
           <CssBaseline />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Container maxWidth="lg" sx={{ pt: 4, pb: 4 }}>
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <Typography variant="h1">
