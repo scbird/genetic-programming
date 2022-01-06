@@ -14,6 +14,8 @@ export const MUTATION_RATE_SET = 'MUTATION_RATE_SET'
 export const BOARD_SIZE_SET = 'BOARD_SIZE_SET'
 export const RUNNING_SET = 'RUNNING_SET'
 
+const TICKS_PER_SECOND = 10
+
 export const step: () => ThunkAction<void, BoardState, any, any> = () => (
   dispatch
 ) => {
@@ -55,13 +57,16 @@ export function startRunning(): ThunkAction<void, BoardState, any, any> {
     run()
 
     function run() {
+      const start = Date.now()
       dispatch(step())
+      const elapsed = (Date.now() - start) / 1000
+      const wait = Math.max(0, 1000 / TICKS_PER_SECOND - elapsed)
 
       setTimeout(() => {
         if (isRunning(getState())) {
           run()
         }
-      })
+      }, wait)
     }
   }
 }
