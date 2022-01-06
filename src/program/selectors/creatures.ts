@@ -73,7 +73,10 @@ export function getCreatureScore(creature: Creature): number {
 }
 
 function getWouldEatPlant(state: BoardState, id: number) {
-  return getWouldEatObject(getCreatures(state)[id], getPlants(state))
+  return getWouldEatObject(
+    getCreatures(state)[id],
+    getPlants(state).filter((plant) => plant.diedAt === null)
+  )
 }
 
 function getWouldEatCreature(state: BoardState, id: number) {
@@ -81,7 +84,9 @@ function getWouldEatCreature(state: BoardState, id: number) {
 
   return getWouldEatObject(
     creatures[id],
-    creatures.filter((creature) => creature.id !== id)
+    creatures.filter(
+      (creature) => creature.diedAt === null && creature.id !== id
+    )
   )
 }
 
