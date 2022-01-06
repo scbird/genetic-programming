@@ -9,6 +9,8 @@ export const BOARD_NEXT_TICK = 'BOARD_NEXT_TICK'
 export const BOARD_NUM_PLANTS_SET = 'BOARD_NUM_PLANTS_SET'
 export const BOARD_NUM_CREATURES_SET = 'BOARD_NUM_CREATURES_SET'
 export const BOARD_TICKS_PER_GENERATION_SET = 'BOARD_TICKS_PER_GENERATION_SET'
+export const SURVIVAL_RATE_SET = 'SURVIVAL_RATE_SET'
+export const MUTATION_RATE_SET = 'MUTATION_RATE_SET'
 export const BOARD_SIZE_SET = 'BOARD_SIZE_SET'
 export const RUNNING_SET = 'RUNNING_SET'
 
@@ -66,6 +68,14 @@ export function startRunning(): ThunkAction<void, BoardState, any, any> {
 
 export function stopRunning(): AnyAction {
   return setRunning(false)
+}
+
+export function setSurvivalRate(survivalRate: number): AnyAction {
+  return { type: SURVIVAL_RATE_SET, payload: survivalRate }
+}
+
+export function setMutationRate(mutationRate: number): AnyAction {
+  return { type: MUTATION_RATE_SET, payload: mutationRate }
 }
 
 function setRunning(running: boolean): AnyAction {

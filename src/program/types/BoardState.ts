@@ -17,4 +17,6 @@ export interface BoardState {
   generations: readonly Generation[]
   training: boolean
   running: boolean
+  survivalRate: number
+  mutationRate: number
 }

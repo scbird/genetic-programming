@@ -35,3 +35,11 @@ export function getPlants(state: BoardState): readonly Plant[] {
 export function isRunning(state: BoardState): boolean {
   return state.running
 }
+
+export function getSurvivalRate(state: BoardState): number {
+  return state.survivalRate
+}
+
+export function getMutationRate(state: BoardState): number {
+  return state.mutationRate
+}

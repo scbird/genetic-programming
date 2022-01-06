@@ -5,12 +5,16 @@ import {
   setNumCreatures,
   setNumPlants,
   setBoardSize,
-  setTicksPerGeneration
+  setTicksPerGeneration,
+  setSurvivalRate,
+  setMutationRate
 } from '../program/actions'
 import {
   getBoardSize,
+  getMutationRate,
   getNumCreatures,
   getNumPlants,
+  getSurvivalRate,
   getTicksPerGeneration
 } from '../program/selectors'
 import Title from './Title'
@@ -19,6 +23,8 @@ export const Settings: FC = () => {
   const dispatch = useDispatch()
   const numPlants = useSelector(getNumPlants)
   const numCreatures = useSelector(getNumCreatures)
+  const survivalRate = useSelector(getSurvivalRate)
+  const mutationRate = useSelector(getMutationRate)
   const ticksPerGeneration = useSelector(getTicksPerGeneration)
   const boardSize = useSelector(getBoardSize).width
 
@@ -56,17 +62,36 @@ export const Settings: FC = () => {
             />
           </Tooltip>
         </Grid>
-        {/*
         <Grid item lg={6}>
           <Tooltip title="What portion of the creatures survive through to the next generation. Range: 0 (all die) to 1 (all survive)">
-            <TextField label="Survival rate" variant="standard" size="small" />
+            <TextField
+              label="Survival rate"
+              variant="standard"
+              size="small"
+              value={survivalRate}
+              onChange={(event) => {
+                if (!isNaN(+event.target.value)) {
+                  dispatch(setSurvivalRate(+event.target.value))
+                }
+              }}
+            />
           </Tooltip>
         </Grid>
         <Grid item lg={6}>
           <Tooltip title="How much of a new creature's code differs from its parent. Range: 0 (identical) to 1 (completely different)">
-            <TextField label="Mutation rate" variant="standard" size="small" />
+            <TextField
+              label="Mutation rate"
+              variant="standard"
+              size="small"
+              value={mutationRate}
+              onChange={(event) => {
+                if (!isNaN(+event.target.value)) {
+                  dispatch(setMutationRate(+event.target.value))
+                }
+              }}
+            />
           </Tooltip>
-        </Grid>*/}
+        </Grid>
         <Grid item lg={6}>
           <Tooltip title="How many ticks to run per generation when evolving the population. Does not affect population simulator">
             <TextField

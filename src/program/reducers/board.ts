@@ -26,7 +26,9 @@ export const initialState: BoardState = {
   numPlants: 20,
   generations: [],
   training: false,
-  running: false
+  running: false,
+  survivalRate: 0.5,
+  mutationRate: 0.01
 }
 
 export const boardReducer: Reducer<BoardState> = (

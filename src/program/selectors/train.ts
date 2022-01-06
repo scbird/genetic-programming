@@ -3,10 +3,8 @@ import { mutate } from '../mutate'
 import { parse } from '../parse'
 import { stringify } from '../stringify'
 import { BoardState, Generation } from '../types'
-import { getNumCreatures } from './board'
+import { getMutationRate, getNumCreatures, getSurvivalRate } from './board'
 import { getCreatureScore } from './creatures'
-
-const KEEP_PORTION = 0.5
 
 export function isTraining(state: BoardState): boolean {
   return state.training
@@ -33,14 +31,18 @@ export function getMutatedExpressions(state: BoardState): string[] {
     .map(({ idx }) => creatures[idx].expression)
 
   // Initialise the expressions with the best ones from the previous generation
-  const expressionsToKeep = Math.ceil(getNumCreatures(state) * KEEP_PORTION)
+  const expressionsToKeep = Math.ceil(
+    getNumCreatures(state) * getSurvivalRate(state)
+  )
   const expressions = bestExpressions.slice(0, expressionsToKeep)
 
   // Add mutated expressions until we have a new expression for every creature
   while (expressions.length < getNumCreatures(state)) {
     const parentIdx = choose(scores)
     const originalExpression = creatures[parentIdx].expression
-    const mutatedExpression = stringify(mutate(parse(originalExpression)))
+    const mutatedExpression = stringify(
+      mutate(parse(originalExpression), getMutationRate(state))
+    )
 
     expressions.push(mutatedExpression)
   }
