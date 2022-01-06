@@ -5,6 +5,7 @@ import {
   CssBaseline,
   Grid,
   Paper,
+  Stack,
   ThemeProvider,
   Typography
 } from '@mui/material'
@@ -77,6 +78,11 @@ const Home: NextPage = () => {
                 </Paper>
               </Grid>
             </Grid>
+            <Stack mt={4} alignItems="center">
+              <Typography variant={'muted' as any}>
+                Stefan Bird, 2022
+              </Typography>
+            </Stack>
           </Container>
         </Box>
       </ThemeProvider>
