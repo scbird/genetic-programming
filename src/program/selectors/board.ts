@@ -37,9 +37,21 @@ export function isRunning(state: BoardState): boolean {
 }
 
 export function getSurvivalRate(state: BoardState): number {
+  return toNumber(state.survivalRate)
+}
+
+export function getRawSurvivalRate(state: BoardState): string {
   return state.survivalRate
 }
 
 export function getMutationRate(state: BoardState): number {
+  return toNumber(state.mutationRate)
+}
+
+export function getRawMutationRate(state: BoardState): string {
   return state.mutationRate
+}
+
+function toNumber(number: string): number {
+  return +number.replace(/\.$/, '')
 }

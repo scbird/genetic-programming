@@ -17,6 +17,7 @@ export interface BoardState {
   generations: readonly Generation[]
   training: boolean
   running: boolean
-  survivalRate: number
-  mutationRate: number
+  // These are strings so that the user can enter the decimal point
+  survivalRate: string
+  mutationRate: string
 }

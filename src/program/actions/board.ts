@@ -75,11 +75,11 @@ export function stopRunning(): AnyAction {
   return setRunning(false)
 }
 
-export function setSurvivalRate(survivalRate: number): AnyAction {
+export function setSurvivalRate(survivalRate: string): AnyAction {
   return { type: SURVIVAL_RATE_SET, payload: survivalRate }
 }
 
-export function setMutationRate(mutationRate: number): AnyAction {
+export function setMutationRate(mutationRate: string): AnyAction {
   return { type: MUTATION_RATE_SET, payload: mutationRate }
 }
 

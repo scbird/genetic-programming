@@ -9,7 +9,9 @@ import {
   BOARD_SET_GENERATION,
   TRAINING_SET,
   GENERATIONS_CLEAR,
-  RUNNING_SET
+  RUNNING_SET,
+  SURVIVAL_RATE_SET,
+  MUTATION_RATE_SET
 } from '../actions'
 import { BoardState } from '../types'
 
@@ -27,8 +29,8 @@ export const initialState: BoardState = {
   generations: [],
   training: false,
   running: false,
-  survivalRate: 0.5,
-  mutationRate: 0.01
+  survivalRate: '0.5',
+  mutationRate: '0.01'
 }
 
 export const boardReducer: Reducer<BoardState> = (
@@ -57,6 +59,12 @@ export const boardReducer: Reducer<BoardState> = (
 
     case BOARD_TICKS_PER_GENERATION_SET:
       return { ...state, ticksPerGeneration: action.payload }
+
+    case SURVIVAL_RATE_SET:
+      return { ...state, survivalRate: action.payload }
+
+    case MUTATION_RATE_SET:
+      return { ...state, mutationRate: action.payload }
 
     case BOARD_SIZE_SET:
       return { ...state, boardSize: action.payload }

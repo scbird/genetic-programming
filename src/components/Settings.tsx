@@ -2,19 +2,19 @@ import { Grid, TextField, Tooltip } from '@mui/material'
 import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
+  setBoardSize,
+  setMutationRate,
   setNumCreatures,
   setNumPlants,
-  setBoardSize,
-  setTicksPerGeneration,
   setSurvivalRate,
-  setMutationRate
+  setTicksPerGeneration
 } from '../program/actions'
 import {
   getBoardSize,
-  getMutationRate,
   getNumCreatures,
   getNumPlants,
-  getSurvivalRate,
+  getRawMutationRate,
+  getRawSurvivalRate,
   getTicksPerGeneration
 } from '../program/selectors'
 import Title from './Title'
@@ -23,8 +23,8 @@ export const Settings: FC = () => {
   const dispatch = useDispatch()
   const numPlants = useSelector(getNumPlants)
   const numCreatures = useSelector(getNumCreatures)
-  const survivalRate = useSelector(getSurvivalRate)
-  const mutationRate = useSelector(getMutationRate)
+  const survivalRate = useSelector(getRawSurvivalRate)
+  const mutationRate = useSelector(getRawMutationRate)
   const ticksPerGeneration = useSelector(getTicksPerGeneration)
   const boardSize = useSelector(getBoardSize).width
 
@@ -40,8 +40,10 @@ export const Settings: FC = () => {
               variant="standard"
               size="small"
               onChange={(event) => {
-                if (!isNaN(+event.target.value)) {
-                  dispatch(setNumPlants(+event.target.value))
+                const value = event.target.value
+
+                if (isInteger(value) && isPositive(value)) {
+                  dispatch(setNumPlants(+value))
                 }
               }}
             />
@@ -55,8 +57,10 @@ export const Settings: FC = () => {
               value={numCreatures}
               size="small"
               onChange={(event) => {
-                if (!isNaN(+event.target.value)) {
-                  dispatch(setNumCreatures(+event.target.value))
+                const value = event.target.value
+
+                if (isInteger(value) && isPositive(value)) {
+                  dispatch(setNumCreatures(+value))
                 }
               }}
             />
@@ -70,8 +74,10 @@ export const Settings: FC = () => {
               size="small"
               value={survivalRate}
               onChange={(event) => {
-                if (!isNaN(+event.target.value)) {
-                  dispatch(setSurvivalRate(+event.target.value))
+                const value = event.target.value
+
+                if (isZeroOrPositive(value)) {
+                  dispatch(setSurvivalRate(value))
                 }
               }}
             />
@@ -85,8 +91,10 @@ export const Settings: FC = () => {
               size="small"
               value={mutationRate}
               onChange={(event) => {
-                if (!isNaN(+event.target.value)) {
-                  dispatch(setMutationRate(+event.target.value))
+                const value = event.target.value
+
+                if (isZeroOrPositive(value)) {
+                  dispatch(setMutationRate(value))
                 }
               }}
             />
@@ -100,8 +108,10 @@ export const Settings: FC = () => {
               size="small"
               value={ticksPerGeneration}
               onChange={(event) => {
-                if (!isNaN(+event.target.value)) {
-                  dispatch(setTicksPerGeneration(+event.target.value))
+                const value = event.target.value
+
+                if (isInteger(value) && isPositive(value)) {
+                  dispatch(setTicksPerGeneration(+value))
                 }
               }}
             />
@@ -115,10 +125,10 @@ export const Settings: FC = () => {
               size="small"
               value={boardSize}
               onChange={(event) => {
-                const value = +event.target.value
+                const value = event.target.value
 
-                if (!isNaN(value)) {
-                  dispatch(setBoardSize({ width: value, height: value }))
+                if (isInteger(value) && isPositive(value)) {
+                  dispatch(setBoardSize({ width: +value, height: +value }))
                 }
               }}
             />
@@ -127,4 +137,21 @@ export const Settings: FC = () => {
       </Grid>
     </>
   )
+}
+
+function isPositive(number: string): boolean {
+  return toNumber(number) > 0
+}
+
+function isZeroOrPositive(number: string): boolean {
+  return toNumber(number) >= 0
+}
+
+function isInteger(number: string) {
+  return Math.floor(+number) === +number
+}
+
+function toNumber(number: string): number {
+  // Accept numbers that have a trailing decimal point so the user can type
+  return +number.replace(/\.$/, '')
 }
