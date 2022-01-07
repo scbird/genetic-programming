@@ -12,6 +12,10 @@ export function generate(depth = 0, maxDepth = MAX_DEPTH): Node {
   }
 }
 
+export function generateValue(): number {
+  return TERMINAL_RANGE * ((Math.random() - 0.5) * 2)
+}
+
 function getOperatorProbability(depth: number, maxDepth: number) {
   return 1 - depth / maxDepth
 }
@@ -19,7 +23,7 @@ function getOperatorProbability(depth: number, maxDepth: number) {
 function generateTerminal(): TerminalNode {
   return {
     type: 'terminal',
-    value: TERMINAL_RANGE * ((Math.random() - 0.5) * 2)
+    value: generateValue()
   }
 }
 

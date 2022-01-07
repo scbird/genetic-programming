@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { mutate } from '../mutate'
+import { Mutator, regenerate } from '../mutators'
 import { parse } from '../parse'
 import { stringify } from '../stringify'
 import { BoardState, Generation } from '../types'
@@ -9,6 +9,8 @@ import { getCreatureScore } from './creatures'
 export function isTraining(state: BoardState): boolean {
   return state.training
 }
+
+const MUTATOR: Mutator = regenerate()
 
 export function getMutatedExpressions(state: BoardState): string[] {
   const creatures = state.generations[state.generations.length - 1].creatures
@@ -40,7 +42,7 @@ export function getMutatedExpressions(state: BoardState): string[] {
     const parentIdx = choose(weights)
     const originalExpression = creatures[parentIdx].expression
     const mutatedExpression = stringify(
-      mutate(parse(originalExpression), getMutationRate(state))
+      MUTATOR(parse(originalExpression), getMutationRate(state))
     )
 
     expressions.push(mutatedExpression)

@@ -1,16 +1,14 @@
-import { generate } from './generate'
-import { Node, OperatorNode } from './types'
-
-const MUTATION_RATE = 0.05
+import { generate } from '../generate'
+import { Node, OperatorNode } from '../types'
+import { Mutator } from './types'
 
 /**
  * Applies random mutations to the node
  */
-export function mutate(
-  root: Node,
-  mutationRate = MUTATION_RATE,
-  maxDepth?: number
-): Node {
+export const regenerate: (maxDepth?: number) => Mutator = (maxDepth) => (
+  root,
+  mutationRate
+) => {
   // Flatten the tree so that each node has the same probability of being selected
   const parents: {
     node: OperatorNode | null
