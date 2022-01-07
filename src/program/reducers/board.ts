@@ -1,17 +1,16 @@
 import { Reducer } from 'redux'
 import {
   BOARD_NEXT_TICK,
-  BOARD_RESET_POPULATION,
-  BOARD_NUM_PLANTS_SET,
   BOARD_NUM_CREATURES_SET,
-  BOARD_TICKS_PER_GENERATION_SET,
-  BOARD_SIZE_SET,
+  BOARD_NUM_PLANTS_SET,
+  BOARD_RESET_POPULATION,
   BOARD_SET_GENERATION,
-  TRAINING_SET,
-  GENERATIONS_CLEAR,
+  BOARD_SIZE_SET,
+  BOARD_TICKS_PER_GENERATION_SET,
+  MUTATION_RATE_SET,
   RUNNING_SET,
   SURVIVAL_RATE_SET,
-  MUTATION_RATE_SET
+  TRAINING_SET
 } from '../actions'
 import { BoardState } from '../types'
 
@@ -39,7 +38,7 @@ export const boardReducer: Reducer<BoardState> = (
 ) => {
   switch (action.type) {
     case BOARD_RESET_POPULATION:
-      return { ...state, tick: 0, running: false }
+      return { ...state, tick: 0 }
 
     case BOARD_SET_GENERATION:
       return {
@@ -82,9 +81,6 @@ export const boardReducer: Reducer<BoardState> = (
         training: action.payload ? false : state.training,
         running: action.payload
       }
-
-    case GENERATIONS_CLEAR:
-      return { ...state, training: false }
 
     default:
       return state
