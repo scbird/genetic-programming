@@ -18,7 +18,7 @@ export const CreatureDetails: FC<CreatureDetailsProps> = ({ creature }) => {
           Plants eaten: <b>{creature.plantsEaten}</b>
         </Typography>
         <Typography>
-          Creatires eaten: <b>{creature.creaturesEaten}</b>
+          Creatures eaten: <b>{creature.creaturesEaten}</b>
         </Typography>
         <Typography>
           Score: <b>{getCreatureScore(creature)}</b>
