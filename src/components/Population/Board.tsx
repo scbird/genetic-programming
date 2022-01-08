@@ -96,6 +96,14 @@ export const Board: FC<BoardProps> = ({ width = 600 }) => {
             </div>
           )
         })}
+        {/*
+        This is a sibling to the creature divs so that it doesn't receive events if the
+        user clicks on a creature
+        */}
+        <div
+          style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}
+          onClick={() => dispatch(selectCreature(undefined))}
+        />
         {creatures.map((creature) => {
           return (
             <div
