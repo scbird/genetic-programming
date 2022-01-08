@@ -1,8 +1,10 @@
-import { Box, Grid, Stack, Typography } from '@mui/material'
+import { Close } from '@mui/icons-material'
+import { Box, Grid, IconButton, Stack, Typography } from '@mui/material'
 import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   resetPopulation,
+  selectCreature,
   startRunning,
   step,
   stopRunning
@@ -100,10 +102,16 @@ export const Population: FC = () => {
                     creature={{ ...selectedCreature, heading: 0 }}
                     width="1em"
                   />
-                  <span style={{ paddingLeft: '0.75em' }}>
+                  <div style={{ paddingLeft: '0.75em' }}>
                     Creature {selectedCreature.id}
                     {selectedCreature.diedAt !== null && ' (dead)'}
-                  </span>
+                  </div>
+                  <Box style={{ flex: 1, textAlign: 'right' }}>
+                    <IconButton
+                      onClick={() => dispatch(selectCreature(undefined))}>
+                      <Close style={{ color: 'gray' }} />
+                    </IconButton>
+                  </Box>
                 </Stack>
               </Title>
               <CreatureDetails creature={selectedCreature} />
