@@ -1,12 +1,14 @@
 import { Reducer } from 'redux'
 import {
+  BOARD_NEXT_RUN,
   BOARD_NEXT_TICK,
   BOARD_NUM_CREATURES_SET,
   BOARD_NUM_PLANTS_SET,
   BOARD_RESET_POPULATION,
+  BOARD_RUNS_PER_GENERATION_SET,
   BOARD_SET_GENERATION,
   BOARD_SIZE_SET,
-  BOARD_TICKS_PER_GENERATION_SET,
+  BOARD_TICKS_PER_RUN_SET,
   MUTATION_RATE_SET,
   RUNNING_SET,
   SURVIVAL_RATE_SET,
@@ -16,8 +18,10 @@ import { BoardState } from '../types'
 
 export const initialState: BoardState = {
   boardSize: { width: 20, height: 20 },
-  ticksPerGeneration: 200,
+  ticksPerRun: 50,
+  runsPerGeneration: 5,
   generation: 0,
+  run: 0,
   tick: 0,
   creatures: [],
   plants: [],
@@ -44,11 +48,15 @@ export const boardReducer: Reducer<BoardState> = (
       return {
         ...state,
         generation: action.payload,
+        run: 0,
         tick: state.generations[action.payload].tick
       }
 
     case BOARD_NEXT_TICK:
       return { ...state, tick: state.tick + 1 }
+
+    case BOARD_NEXT_RUN:
+      return { ...state, run: state.run + 1, tick: 0 }
 
     case BOARD_NUM_PLANTS_SET:
       return { ...state, numPlants: action.payload }
@@ -56,8 +64,11 @@ export const boardReducer: Reducer<BoardState> = (
     case BOARD_NUM_CREATURES_SET:
       return { ...state, numCreatures: action.payload }
 
-    case BOARD_TICKS_PER_GENERATION_SET:
-      return { ...state, ticksPerGeneration: action.payload }
+    case BOARD_RUNS_PER_GENERATION_SET:
+      return { ...state, runsPerGeneration: action.payload }
+
+    case BOARD_TICKS_PER_RUN_SET:
+      return { ...state, ticksPerRun: action.payload }
 
     case SURVIVAL_RATE_SET:
       return { ...state, survivalRate: action.payload }

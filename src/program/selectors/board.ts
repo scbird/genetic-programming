@@ -12,12 +12,20 @@ export function getBoardSize(state: BoardState): Dimension {
   return state.boardSize
 }
 
-export function getTicksPerGeneration(state: BoardState): number {
-  return state.ticksPerGeneration
+export function getTicksPerRun(state: BoardState): number {
+  return state.ticksPerRun
+}
+
+export function getRunsPerGeneration(state: BoardState): number {
+  return state.runsPerGeneration
 }
 
 export function getTick(state: BoardState): number {
   return state.tick
+}
+
+export function getRun(state: BoardState): number {
+  return state.run
 }
 
 export function getGeneration(state: BoardState): number {

@@ -10,7 +10,7 @@ import {
 import {
   getGeneration,
   getTick,
-  getTicksPerGeneration,
+  getTicksPerRun,
   isRunning,
   isTraining
 } from '../../program/selectors'
@@ -24,7 +24,7 @@ export const Population: FC = () => {
   const tick = useSelector((state: BoardState) => {
     // Don't update per-tick when training
     if (isTraining(state)) {
-      return getTicksPerGeneration(state)
+      return getTicksPerRun(state)
     } else {
       return getTick(state)
     }

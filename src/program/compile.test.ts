@@ -37,7 +37,7 @@ describe('compile', () => {
           location: { x: 60, y: 70 }
         }
       ]
-    } as BoardState
+    } as any
     const getResult = compiled(
       state,
       1,
@@ -59,17 +59,19 @@ describe('compile', () => {
           id: 0,
           type: 'creature',
           location: { x: 0, y: 0 },
-          heading: 0
+          heading: 0,
+          diedAt: null
         },
         {
           id: 1,
           type: 'creature',
           location: { x: 0.5, y: 0 },
-          heading: -Math.PI
+          heading: -Math.PI,
+          diedAt: null
         }
       ],
-      plants: [{ id: 0, type: 'plant', location: { x: 5, y: 5 } }]
-    } as BoardState
+      plants: [{ id: 0, type: 'plant', location: { x: 5, y: 5 }, diedAt: null }]
+    } as any
     const requestedActions: AnyAction[] = []
     const getResult = compiled(
       state,
@@ -94,16 +96,18 @@ describe('compile', () => {
           id: 0,
           type: 'creature',
           location: { x: 0, y: 0 },
-          heading: 0
+          heading: 0,
+          diedAt: null
         },
         {
           id: 1,
           type: 'creature',
           location: { x: 0.5, y: 0 },
-          heading: -Math.PI
+          heading: -Math.PI,
+          diedAt: null
         }
       ]
-    } as BoardState
+    } as any
     const requestedActions: AnyAction[] = []
     const getResult = compiled(
       state,

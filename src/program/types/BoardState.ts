@@ -6,7 +6,9 @@ import { Plant } from './Plant'
 export interface BoardState {
   generation: number
   tick: number
-  ticksPerGeneration: number
+  run: number
+  ticksPerRun: number
+  runsPerGeneration: number
   creatures: readonly Creature[]
   plants: readonly Plant[]
   boardSize: Dimension

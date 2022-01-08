@@ -7,15 +7,17 @@ import {
   setNumCreatures,
   setNumPlants,
   setSurvivalRate,
-  setTicksPerGeneration
+  setTicksPerRun,
+  setRunsPerGeneration
 } from '../program/actions'
 import {
   getBoardSize,
   getNumCreatures,
   getNumPlants,
+  getRunsPerGeneration,
+  getTicksPerRun,
   getRawMutationRate,
-  getRawSurvivalRate,
-  getTicksPerGeneration
+  getRawSurvivalRate
 } from '../program/selectors'
 import Title from './Title'
 
@@ -25,7 +27,8 @@ export const Settings: FC = () => {
   const numCreatures = useSelector(getNumCreatures)
   const survivalRate = useSelector(getRawSurvivalRate)
   const mutationRate = useSelector(getRawMutationRate)
-  const ticksPerGeneration = useSelector(getTicksPerGeneration)
+  const runsPerGeneration = useSelector(getRunsPerGeneration)
+  const ticksPerRun = useSelector(getTicksPerRun)
   const boardSize = useSelector(getBoardSize).width
 
   return (
@@ -101,17 +104,34 @@ export const Settings: FC = () => {
           </Tooltip>
         </Grid>
         <Grid item lg={6}>
-          <Tooltip title="How many ticks to run per generation when evolving the population. Does not affect population simulator">
+          <Tooltip title="How many runs per generation when evolving the population. Larger values help average out the score so that a creature's score is less likely to be influenced by the starting conditions of each run. Does not affect population simulator">
             <TextField
-              label="Ticks per generation"
+              label="Runs per generation"
               variant="standard"
               size="small"
-              value={ticksPerGeneration}
+              value={runsPerGeneration}
               onChange={(event) => {
                 const value = event.target.value
 
                 if (isInteger(value) && isPositive(value)) {
-                  dispatch(setTicksPerGeneration(+value))
+                  dispatch(setRunsPerGeneration(+value))
+                }
+              }}
+            />
+          </Tooltip>
+        </Grid>
+        <Grid item lg={6}>
+          <Tooltip title="How many ticks to run per run when evolving the population. Larger values give each creature more time to eat food before the board is reset. Does not affect population simulator">
+            <TextField
+              label="Ticks per run"
+              variant="standard"
+              size="small"
+              value={ticksPerRun}
+              onChange={(event) => {
+                const value = event.target.value
+
+                if (isInteger(value) && isPositive(value)) {
+                  dispatch(setTicksPerRun(+value))
                 }
               }}
             />
