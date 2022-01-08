@@ -10,6 +10,7 @@ export const BOARD_NUM_PLANTS_SET = 'BOARD_NUM_PLANTS_SET'
 export const BOARD_NUM_CREATURES_SET = 'BOARD_NUM_CREATURES_SET'
 export const BOARD_TICKS_PER_RUN_SET = 'BOARD_TICKS_PER_RUN_SET'
 export const BOARD_RUNS_PER_GENERATION_SET = 'BOARD_RUNS_PER_GENERATION_SET'
+export const BOARD_SELECT_CREATURE = 'BOARD_SELECT_CREATURE'
 export const SURVIVAL_RATE_SET = 'SURVIVAL_RATE_SET'
 export const MUTATION_RATE_SET = 'MUTATION_RATE_SET'
 export const BOARD_SIZE_SET = 'BOARD_SIZE_SET'
@@ -86,6 +87,10 @@ export function setSurvivalRate(survivalRate: string): AnyAction {
 
 export function setMutationRate(mutationRate: string): AnyAction {
   return { type: MUTATION_RATE_SET, payload: mutationRate }
+}
+
+export function selectCreature(creatureId: number): AnyAction {
+  return { type: BOARD_SELECT_CREATURE, payload: creatureId }
 }
 
 function setRunning(running: boolean): AnyAction {

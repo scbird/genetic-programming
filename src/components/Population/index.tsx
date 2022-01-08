@@ -1,4 +1,4 @@
-import { Box, Grid } from '@mui/material'
+import { Box, Grid, Stack, Typography } from '@mui/material'
 import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -40,6 +40,7 @@ export const Population: FC = () => {
   const training = useSelector(isTraining)
   const running = useSelector(isRunning)
   const dispatch = useDispatch()
+  const boardWidth = 600
 
   return (
     <>
@@ -63,7 +64,14 @@ export const Population: FC = () => {
       </Box>
       <Grid container>
         <Grid item md={8}>
-          <Board />
+          <Box width={boardWidth}>
+            <Board width={boardWidth} />
+            <Stack mt={3} alignItems="center">
+              <Typography variant={'muted' as any}>
+                Click on a creature to view its details
+              </Typography>
+            </Stack>
+          </Box>
         </Grid>
         <Grid item md={4}></Grid>
       </Grid>

@@ -22,4 +22,5 @@ export interface BoardState {
   // These are strings so that the user can enter the decimal point
   survivalRate: string
   mutationRate: string
+  selectedCreatureId?: number
 }

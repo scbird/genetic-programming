@@ -19,7 +19,7 @@ export const Creature: FC<CreatureProps> = ({ creature }) => {
       y="0px"
       viewBox="0 0 1000 1000"
       style={{
-        transform: `rotate(${creature.heading}rad)`,
+        transform: `translate(0%, -10%) rotate(${creature.heading}rad)`,
         filter: `opacity(${isDead ? 0.25 : 1})`
       }}>
       <metadata>Svg Vector Icons : http://www.onlinewebfonts.com/icon</metadata>
