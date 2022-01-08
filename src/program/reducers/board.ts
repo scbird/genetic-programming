@@ -6,7 +6,6 @@ import {
   BOARD_NUM_PLANTS_SET,
   BOARD_RESET_POPULATION,
   BOARD_RUNS_PER_GENERATION_SET,
-  BOARD_SELECT_CREATURE,
   BOARD_SET_GENERATION,
   BOARD_SIZE_SET,
   BOARD_TICKS_PER_RUN_SET,
@@ -35,7 +34,10 @@ export const initialState: BoardState = {
   running: false,
   survivalRate: '0.5',
   mutationRate: '0.01',
-  selectedCreatureId: undefined
+  ui: {
+    paused: false,
+    selectedCreatureId: undefined
+  }
 }
 
 export const boardReducer: Reducer<BoardState> = (
@@ -80,9 +82,6 @@ export const boardReducer: Reducer<BoardState> = (
 
     case BOARD_SIZE_SET:
       return { ...state, boardSize: action.payload }
-
-    case BOARD_SELECT_CREATURE:
-      return { ...state, selectedCreatureId: action.payload }
 
     case TRAINING_SET:
       return {

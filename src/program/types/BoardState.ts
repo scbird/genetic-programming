@@ -2,6 +2,7 @@ import { Creature } from './Creature'
 import { Dimension } from './Dimension'
 import { Generation } from './Generation'
 import { Plant } from './Plant'
+import { UiState } from './UiState'
 
 export interface BoardState {
   generation: number
@@ -22,5 +23,5 @@ export interface BoardState {
   // These are strings so that the user can enter the decimal point
   survivalRate: string
   mutationRate: string
-  selectedCreatureId?: number
+  ui: UiState
 }

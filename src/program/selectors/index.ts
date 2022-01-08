@@ -1,4 +1,5 @@
 export * from './board'
 export * from './creatures'
 export * from './train'
+export * from './ui'
 export * from './util'

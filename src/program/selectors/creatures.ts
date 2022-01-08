@@ -77,14 +77,6 @@ export const getPopulationScore = createSelector(getCreatures, (creatures) =>
   creatures.reduce((acc, creature) => acc + getCreatureScore(creature), 0)
 )
 
-export function getSelectedCreatureId(state: BoardState): number | undefined {
-  return state.selectedCreatureId
-}
-
-export function getSelectedCreature(state: BoardState): Creature | undefined {
-  return getCreatures(state)[getSelectedCreatureId(state) ?? -1]
-}
-
 function getWouldEatPlant(state: BoardState, id: number) {
   return getWouldEatObject(
     getCreatures(state)[id],

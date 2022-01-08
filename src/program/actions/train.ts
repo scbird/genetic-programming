@@ -9,6 +9,7 @@ import {
 } from '../selectors'
 import { BoardState } from '../types'
 import { setGeneration, step } from './board'
+import { pauseUi, unPauseUi } from './ui'
 
 export const GENERATIONS_CLEAR = 'GENERATIONS_CLEAR'
 export const GENERATION_PREPARE_NEXT = 'GENERATION_PREPARE_NEXT'
@@ -32,20 +33,24 @@ export const trainNextGeneration: () => ThunkAction<
   any,
   any
 > = () => (dispatch, getState) => {
-  const start = Date.now()
-  dispatch(prepareNextGeneration())
-  dispatch(setGeneration(getState().generations.length - 1))
+  try {
+    dispatch(pauseUi())
 
-  while (getRun(getState()) < getRunsPerGeneration(getState())) {
-    dispatch(nextRun())
+    dispatch(prepareNextGeneration())
+    dispatch(setGeneration(getState().generations.length - 1))
 
-    while (getTick(getState()) < getTicksPerRun(getState())) {
-      dispatch(step())
+    while (getRun(getState()) < getRunsPerGeneration(getState())) {
+      dispatch(nextRun())
+
+      while (getTick(getState()) < getTicksPerRun(getState())) {
+        dispatch(step())
+      }
     }
-  }
 
-  dispatch(completeGeneration())
-  console.log(Date.now() - start)
+    dispatch(completeGeneration())
+  } finally {
+    dispatch(unPauseUi())
+  }
 }
 
 export function startTraining(): ThunkAction<void, BoardState, any, any> {

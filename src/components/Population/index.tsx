@@ -14,6 +14,7 @@ import {
   getSelectedCreatureId,
   getTick,
   getTicksPerRun,
+  isPaused,
   isRunning,
   isTraining
 } from '../../program/selectors'
@@ -26,16 +27,17 @@ import { CreatureDetails } from './CreatureDetails'
 
 export const Population: FC = () => {
   const generation = useSelector(getGeneration)
+
   // These selectors are structured like this because we don't want to update per-tick when we're training
   const tick = useSelector((state: BoardState) => {
-    if (isTraining(state)) {
+    if (isUiPaused(state)) {
       return getTicksPerRun(state)
     } else {
       return getTick(state)
     }
   })
   const score = useSelector((state: BoardState) => {
-    if (isTraining(state)) {
+    if (isUiPaused(state)) {
       return null
     } else {
       return getPopulationScore(state)
@@ -45,7 +47,7 @@ export const Population: FC = () => {
     const selectedCreatureId = getSelectedCreatureId(state)
 
     return (
-      (!isTraining(state) &&
+      (!isUiPaused(state) &&
         selectedCreatureId !== undefined &&
         getCreatures(state)[selectedCreatureId]) ||
       undefined
@@ -107,4 +109,8 @@ export const Population: FC = () => {
       </Grid>
     </>
   )
+}
+
+function isUiPaused(state: BoardState) {
+  return isPaused(state) || isTraining(state)
 }
