@@ -8,8 +8,10 @@ import {
   stopRunning
 } from '../../program/actions'
 import {
+  getCreatures,
   getGeneration,
   getPopulationScore,
+  getSelectedCreatureId,
   getTick,
   getTicksPerRun,
   isRunning,
@@ -19,11 +21,13 @@ import { BoardState } from '../../program/types'
 import { ControlBar } from '../ControlBar'
 import Title from '../Title'
 import { Board } from './Board'
+import { Creature } from './Creature'
+import { CreatureDetails } from './CreatureDetails'
 
 export const Population: FC = () => {
   const generation = useSelector(getGeneration)
+  // These selectors are structured like this because we don't want to update per-tick when we're training
   const tick = useSelector((state: BoardState) => {
-    // Don't update per-tick when training
     if (isTraining(state)) {
       return getTicksPerRun(state)
     } else {
@@ -36,6 +40,16 @@ export const Population: FC = () => {
     } else {
       return getPopulationScore(state)
     }
+  })
+  const selectedCreature = useSelector((state: BoardState) => {
+    const selectedCreatureId = getSelectedCreatureId(state)
+
+    return (
+      (!isTraining(state) &&
+        selectedCreatureId !== undefined &&
+        getCreatures(state)[selectedCreatureId]) ||
+      undefined
+    )
   })
   const training = useSelector(isTraining)
   const running = useSelector(isRunning)
@@ -73,7 +87,23 @@ export const Population: FC = () => {
             </Stack>
           </Box>
         </Grid>
-        <Grid item md={4}></Grid>
+        {selectedCreature && (
+          <Grid item md={4}>
+            <Title color="black">
+              <Stack direction="row" alignItems="center">
+                <Creature
+                  creature={{ ...selectedCreature, heading: 0 }}
+                  width="1em"
+                />
+                <span style={{ paddingLeft: '0.75em' }}>
+                  Creature {selectedCreature.id}
+                  {selectedCreature.diedAt !== null && ' (dead)'}
+                </span>
+              </Stack>
+            </Title>
+            <CreatureDetails creature={selectedCreature} />
+          </Grid>
+        )}
       </Grid>
     </>
   )

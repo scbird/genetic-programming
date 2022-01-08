@@ -3,6 +3,7 @@ import { Node, Operator, OperatorNode, TerminalNode } from './types'
 
 const MAX_DEPTH = 20
 const TERMINAL_RANGE = 5
+const VALUE_DP = 3
 
 export function generate(depth = 0, maxDepth = MAX_DEPTH): Node {
   if (Math.random() < getOperatorProbability(depth, maxDepth)) {
@@ -13,7 +14,11 @@ export function generate(depth = 0, maxDepth = MAX_DEPTH): Node {
 }
 
 export function generateValue(): number {
-  return TERMINAL_RANGE * ((Math.random() - 0.5) * 2)
+  return (
+    Math.round(
+      TERMINAL_RANGE * ((Math.random() - 0.5) * 2) * Math.pow(10, VALUE_DP)
+    ) / Math.pow(10, VALUE_DP)
+  )
 }
 
 function getOperatorProbability(depth: number, maxDepth: number) {

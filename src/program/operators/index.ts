@@ -1,4 +1,5 @@
-import { Operator } from '../types'
+import { Operator, OperatorType } from '../types'
+import { eat, move, turn } from './actions'
 import { add, div, mult, sub } from './arithmetic'
 import { and, eq, gt, gte, lt, lte, neq, not, or } from './boolean'
 import { ifFunc } from './if'
@@ -11,38 +12,79 @@ import {
   closestPlantAngle,
   closestPlantDistance
 } from './state'
-import { eat, turn, move } from './actions'
 
 const ACTION_LIKELIHOOD = 0.1
 
 export const operators: Record<string, Operator> = {
-  add: { parameters: 2, func: add },
-  sub: { parameters: 2, func: sub },
-  div: { parameters: 2, func: div },
-  mult: { parameters: 2, func: mult },
+  add: { parameters: 2, func: add, type: OperatorType.ARITHMETIC },
+  sub: { parameters: 2, func: sub, type: OperatorType.ARITHMETIC },
+  div: { parameters: 2, func: div, type: OperatorType.ARITHMETIC },
+  mult: { parameters: 2, func: mult, type: OperatorType.ARITHMETIC },
 
-  and: { parameters: 2, func: and },
-  or: { parameters: 2, func: or },
-  not: { parameters: 1, func: not },
+  lt: { parameters: 2, func: lt, type: OperatorType.ARITHMETIC },
+  lte: { parameters: 2, func: lte, type: OperatorType.ARITHMETIC },
+  eq: { parameters: 2, func: eq, type: OperatorType.ARITHMETIC },
+  neq: { parameters: 2, func: neq, type: OperatorType.ARITHMETIC },
+  gte: { parameters: 2, func: gte, type: OperatorType.ARITHMETIC },
+  gt: { parameters: 2, func: gt, type: OperatorType.ARITHMETIC },
 
-  lt: { parameters: 2, func: lt },
-  lte: { parameters: 2, func: lte },
-  eq: { parameters: 2, func: eq },
-  neq: { parameters: 2, func: neq },
-  gte: { parameters: 2, func: gte },
-  gt: { parameters: 2, func: gt },
+  if: { parameters: 3, func: ifFunc, type: OperatorType.LOGIC },
+  and: { parameters: 2, func: and, type: OperatorType.LOGIC },
+  or: { parameters: 2, func: or, type: OperatorType.LOGIC },
+  not: { parameters: 1, func: not, type: OperatorType.LOGIC },
 
-  if: { parameters: 3, func: ifFunc },
+  closestFoodDistance: {
+    parameters: 0,
+    func: closestFoodDistance,
+    type: OperatorType.PERCEPTION
+  },
+  closestFoodAngle: {
+    parameters: 0,
+    func: closestFoodAngle,
+    type: OperatorType.PERCEPTION
+  },
+  closestPlantDistance: {
+    parameters: 0,
+    func: closestPlantDistance,
+    type: OperatorType.PERCEPTION
+  },
+  closestPlantAngle: {
+    parameters: 0,
+    func: closestPlantAngle,
+    type: OperatorType.PERCEPTION
+  },
+  closestCreatureDistance: {
+    parameters: 0,
+    func: closestCreatureDistance,
+    type: OperatorType.PERCEPTION
+  },
+  closestCreatureAngle: {
+    parameters: 0,
+    func: closestCreatureAngle,
+    type: OperatorType.PERCEPTION
+  },
+  canEat: {
+    parameters: 0,
+    func: canEat,
+    type: OperatorType.PERCEPTION
+  },
 
-  closestFoodDistance: { parameters: 0, func: closestFoodDistance },
-  closestFoodAngle: { parameters: 0, func: closestFoodAngle },
-  closestPlantDistance: { parameters: 0, func: closestPlantDistance },
-  closestPlantAngle: { parameters: 0, func: closestPlantAngle },
-  closestCreatureDistance: { parameters: 0, func: closestCreatureDistance },
-  closestCreatureAngle: { parameters: 0, func: closestCreatureAngle },
-  canEat: { parameters: 0, func: canEat },
-
-  eat: { parameters: 0, func: eat, likelihood: ACTION_LIKELIHOOD },
-  turn: { parameters: 1, func: turn, likelihood: ACTION_LIKELIHOOD },
-  move: { parameters: 1, func: move, likelihood: ACTION_LIKELIHOOD }
+  eat: {
+    parameters: 0,
+    func: eat,
+    likelihood: ACTION_LIKELIHOOD,
+    type: OperatorType.ACTION
+  },
+  turn: {
+    parameters: 1,
+    func: turn,
+    likelihood: ACTION_LIKELIHOOD,
+    type: OperatorType.ACTION
+  },
+  move: {
+    parameters: 1,
+    func: move,
+    likelihood: ACTION_LIKELIHOOD,
+    type: OperatorType.ACTION
+  }
 }

@@ -18,6 +18,14 @@ export interface Operator {
   parameters: number
   func: OperatorFunction
   likelihood?: number
+  type: OperatorType
+}
+
+export enum OperatorType {
+  ACTION = 'action',
+  PERCEPTION = 'percention',
+  ARITHMETIC = 'arithmetic',
+  LOGIC = 'logic'
 }
 
 export type OperatorFunction<Result extends number | boolean = number> = (

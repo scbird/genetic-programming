@@ -10,7 +10,7 @@ import {
   Typography
 } from '@mui/material'
 import type { NextPage } from 'next'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Provider } from 'react-redux'
 import { applyMiddleware, createStore } from 'redux'
 import thunk from 'redux-thunk'
@@ -30,7 +30,10 @@ const mdTheme = createTheme({
 
 const Home: NextPage = () => {
   const store = createStore(reducer, initialState, applyMiddleware(thunk))
-  store.dispatch(resetTraining() as any)
+
+  useEffect(() => {
+    store.dispatch(resetTraining() as any)
+  }, [store])
 
   return (
     <Provider store={store}>

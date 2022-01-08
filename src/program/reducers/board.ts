@@ -35,7 +35,7 @@ export const initialState: BoardState = {
   running: false,
   survivalRate: '0.5',
   mutationRate: '0.01',
-  selectedCreatureId: 0
+  selectedCreatureId: undefined
 }
 
 export const boardReducer: Reducer<BoardState> = (

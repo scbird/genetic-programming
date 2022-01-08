@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { CSSProperties, FC } from 'react'
 import { Creature as CreatureModel } from '../../program/types'
 import hsl from 'hsl-to-hex'
 
@@ -6,9 +6,10 @@ const NUM_COLORS = 30
 
 export interface CreatureProps {
   creature: CreatureModel
+  width?: CSSProperties['width']
 }
 
-export const Creature: FC<CreatureProps> = ({ creature }) => {
+export const Creature: FC<CreatureProps> = ({ creature, width }) => {
   const isDead = creature.diedAt !== null
 
   return (
@@ -20,7 +21,8 @@ export const Creature: FC<CreatureProps> = ({ creature }) => {
       viewBox="0 0 1000 1000"
       style={{
         transform: `translate(0%, -10%) rotate(${creature.heading}rad)`,
-        filter: `opacity(${isDead ? 0.25 : 1})`
+        filter: `opacity(${isDead ? 0.25 : 1})`,
+        width
       }}>
       <metadata>Svg Vector Icons : http://www.onlinewebfonts.com/icon</metadata>
       <g>
