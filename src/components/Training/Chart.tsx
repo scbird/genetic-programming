@@ -40,7 +40,7 @@ export const Chart: FC = () => {
           />
           <YAxis
             label={{
-              value: 'Total score',
+              value: 'Combined score',
               angle: -90,
               position: 'center',
               dx: -35
@@ -49,7 +49,7 @@ export const Chart: FC = () => {
           />
           <Tooltip
             separator=": "
-            formatter={(value: number) => [value, 'Total score']}
+            formatter={(value: number) => [value, 'Combined score']}
             labelFormatter={(label) => `Generation ${label}`}
           />
           <Bar dataKey="Score" fill="#8884d8" isAnimationActive={false} />

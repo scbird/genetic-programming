@@ -1,4 +1,4 @@
-import { Box } from '@mui/material'
+import { Box, Grid } from '@mui/material'
 import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -9,6 +9,7 @@ import {
 } from '../../program/actions'
 import {
   getGeneration,
+  getPopulationScore,
   getTick,
   getTicksPerRun,
   isRunning,
@@ -29,16 +30,25 @@ export const Population: FC = () => {
       return getTick(state)
     }
   })
-
-  const dispatch = useDispatch()
+  const score = useSelector((state: BoardState) => {
+    if (isTraining(state)) {
+      return null
+    } else {
+      return getPopulationScore(state)
+    }
+  })
+  const training = useSelector(isTraining)
   const running = useSelector(isRunning)
+  const dispatch = useDispatch()
 
   return (
     <>
       <Box sx={{ display: 'flex', alignItems: 'flex-start' }}>
         <Box sx={{ flexGrow: 1 }}>
           <Title>
-            Generation {generation}, tick {tick}
+            Generation {generation}
+            {!training && `, tick ${tick}`}
+            {!training && `, score ${score}`}
           </Title>
         </Box>
         <Box sx={{ marginTop: -1 }}>
@@ -51,7 +61,12 @@ export const Population: FC = () => {
           />
         </Box>
       </Box>
-      <Board />
+      <Grid container>
+        <Grid item md={8}>
+          <Board />
+        </Grid>
+        <Grid item md={4}></Grid>
+      </Grid>
     </>
   )
 }

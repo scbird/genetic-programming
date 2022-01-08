@@ -1,4 +1,5 @@
 import { AnyAction } from 'redux'
+import { createSelector } from 'reselect'
 import { getRequestedAction } from '../getRequestedAction'
 import { BoardState, Creature, Plant } from '../types'
 import {
@@ -71,6 +72,10 @@ export function getCreatureScore(creature: Creature): number {
     creature.plantsEaten * PLANT_SCORE
   )
 }
+
+export const getPopulationScore = createSelector(getCreatures, (creatures) =>
+  creatures.reduce((acc, creature) => acc + getCreatureScore(creature), 0)
+)
 
 function getWouldEatPlant(state: BoardState, id: number) {
   return getWouldEatObject(
