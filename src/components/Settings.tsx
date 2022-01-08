@@ -70,7 +70,41 @@ export const Settings: FC = () => {
           </Tooltip>
         </Grid>
         <Grid item lg={6}>
-          <Tooltip title="What portion of the creatures survive through to the next generation. Range: 0 (all die) to 1 (all survive)">
+          <Tooltip title="How many ticks to run per run when evolving the population. Larger values give each creature more time to eat food before the board is reset. Does not affect population simulator">
+            <TextField
+              label="Ticks per run"
+              variant="standard"
+              size="small"
+              value={ticksPerRun}
+              onChange={(event) => {
+                const value = event.target.value
+
+                if (isInteger(value) && isPositive(value)) {
+                  dispatch(setTicksPerRun(+value))
+                }
+              }}
+            />
+          </Tooltip>
+        </Grid>
+        <Grid item lg={6}>
+          <Tooltip title="How many runs per generation when evolving the population. Larger values help average out the score so that a creature's score is less likely to be influenced by the starting conditions of each run. Does not affect population simulator">
+            <TextField
+              label="Runs per generation"
+              variant="standard"
+              size="small"
+              value={runsPerGeneration}
+              onChange={(event) => {
+                const value = event.target.value
+
+                if (isInteger(value) && isPositive(value)) {
+                  dispatch(setRunsPerGeneration(+value))
+                }
+              }}
+            />
+          </Tooltip>
+        </Grid>
+        <Grid item lg={6}>
+          <Tooltip title="What portion of the creatures survive through to the next generation. Range: 0 (all die and are replaced by their children) to 1 (all survive and there are no children)">
             <TextField
               label="Survival rate"
               variant="standard"
@@ -98,40 +132,6 @@ export const Settings: FC = () => {
 
                 if (isZeroOrPositive(value)) {
                   dispatch(setMutationRate(value))
-                }
-              }}
-            />
-          </Tooltip>
-        </Grid>
-        <Grid item lg={6}>
-          <Tooltip title="How many runs per generation when evolving the population. Larger values help average out the score so that a creature's score is less likely to be influenced by the starting conditions of each run. Does not affect population simulator">
-            <TextField
-              label="Runs per generation"
-              variant="standard"
-              size="small"
-              value={runsPerGeneration}
-              onChange={(event) => {
-                const value = event.target.value
-
-                if (isInteger(value) && isPositive(value)) {
-                  dispatch(setRunsPerGeneration(+value))
-                }
-              }}
-            />
-          </Tooltip>
-        </Grid>
-        <Grid item lg={6}>
-          <Tooltip title="How many ticks to run per run when evolving the population. Larger values give each creature more time to eat food before the board is reset. Does not affect population simulator">
-            <TextField
-              label="Ticks per run"
-              variant="standard"
-              size="small"
-              value={ticksPerRun}
-              onChange={(event) => {
-                const value = event.target.value
-
-                if (isInteger(value) && isPositive(value)) {
-                  dispatch(setTicksPerRun(+value))
                 }
               }}
             />
