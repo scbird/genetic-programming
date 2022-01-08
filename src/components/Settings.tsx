@@ -5,13 +5,15 @@ import {
   setNumCreatures,
   setNumPlants,
   setBoardSize,
-  setTicksPerGeneration
+  setTicksPerRun,
+  setRunsPerGeneration
 } from '../program/actions'
 import {
   getBoardSize,
   getNumCreatures,
   getNumPlants,
-  getTicksPerGeneration
+  getRunsPerGeneration,
+  getTicksPerRun
 } from '../program/selectors'
 import Title from './Title'
 
@@ -19,7 +21,8 @@ export const Settings: FC = () => {
   const dispatch = useDispatch()
   const numPlants = useSelector(getNumPlants)
   const numCreatures = useSelector(getNumCreatures)
-  const ticksPerGeneration = useSelector(getTicksPerGeneration)
+  const runsPerGeneration = useSelector(getRunsPerGeneration)
+  const ticksPerRun = useSelector(getTicksPerRun)
   const boardSize = useSelector(getBoardSize).width
 
   return (
@@ -68,15 +71,30 @@ export const Settings: FC = () => {
           </Tooltip>
         </Grid>*/}
         <Grid item lg={6}>
-          <Tooltip title="How many ticks to run per generation when evolving the population. Does not affect population simulator">
+          <Tooltip title="How many runs per generation when evolving the population. Larger values help average out the score so that a creature's score is less likely to be influenced by the starting conditions of each run. Does not affect population simulator">
             <TextField
-              label="Ticks per generation"
+              label="Runs per generation"
               variant="standard"
               size="small"
-              value={ticksPerGeneration}
+              value={runsPerGeneration}
               onChange={(event) => {
                 if (!isNaN(+event.target.value)) {
-                  dispatch(setTicksPerGeneration(+event.target.value))
+                  dispatch(setRunsPerGeneration(+event.target.value))
+                }
+              }}
+            />
+          </Tooltip>
+        </Grid>
+        <Grid item lg={6}>
+          <Tooltip title="How many ticks to run per run when evolving the population. Larger values give each creature more time to eat food before the board is reset. Does not affect population simulator">
+            <TextField
+              label="Ticks per run"
+              variant="standard"
+              size="small"
+              value={ticksPerRun}
+              onChange={(event) => {
+                if (!isNaN(+event.target.value)) {
+                  dispatch(setTicksPerRun(+event.target.value))
                 }
               }}
             />

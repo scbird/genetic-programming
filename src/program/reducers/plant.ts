@@ -3,7 +3,8 @@ import {
   BOARD_RESET_POPULATION,
   BOARD_NEXT_TICK,
   CREATURE_EAT,
-  BOARD_SET_GENERATION
+  BOARD_SET_GENERATION,
+  BOARD_NEXT_RUN
 } from '../actions'
 import { getCreatures, getPlants, getRandomLocation } from '../selectors'
 import { BoardState, Creature, Plant } from '../types'
@@ -28,6 +29,12 @@ export const plantsReducer: Reducer<BoardState> = (
           .map((_, idx): Plant => createPlant(state, idx))
       }
 
+    case BOARD_NEXT_RUN:
+      return {
+        ...state,
+        plants: getPlants(state).map((_, idx) => createPlant(state, idx))
+      }
+
     case BOARD_NEXT_TICK:
       return {
         ...state,
@@ -37,11 +44,7 @@ export const plantsReducer: Reducer<BoardState> = (
               plant.diedAt !== null &&
               state.tick > plant.diedAt + state.plantRestoreDelay
             ) {
-              return {
-                ...plant,
-                diedAt: null,
-                location: getRandomLocation(state)
-              }
+              return createPlant(state, plant.id)
             } else {
               return plant
             }

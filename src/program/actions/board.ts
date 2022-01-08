@@ -8,7 +8,8 @@ export const BOARD_SET_GENERATION = 'BOARD_SET_GENERATION'
 export const BOARD_NEXT_TICK = 'BOARD_NEXT_TICK'
 export const BOARD_NUM_PLANTS_SET = 'BOARD_NUM_PLANTS_SET'
 export const BOARD_NUM_CREATURES_SET = 'BOARD_NUM_CREATURES_SET'
-export const BOARD_TICKS_PER_GENERATION_SET = 'BOARD_TICKS_PER_GENERATION_SET'
+export const BOARD_TICKS_PER_RUN_SET = 'BOARD_TICKS_PER_RUN_SET'
+export const BOARD_RUNS_PER_GENERATION_SET = 'BOARD_RUNS_PER_GENERATION_SET'
 export const BOARD_SIZE_SET = 'BOARD_SIZE_SET'
 
 export const step: () => ThunkAction<void, BoardState, any, any> = () => (
@@ -34,8 +35,12 @@ export function setNumCreatures(numCreatures: number): AnyAction {
   return { type: BOARD_NUM_CREATURES_SET, payload: numCreatures }
 }
 
-export function setTicksPerGeneration(ticksPerGeneration: number): AnyAction {
-  return { type: BOARD_TICKS_PER_GENERATION_SET, payload: ticksPerGeneration }
+export function setRunsPerGeneration(runsPerGeneration: number): AnyAction {
+  return { type: BOARD_RUNS_PER_GENERATION_SET, payload: runsPerGeneration }
+}
+
+export function setTicksPerRun(ticksPerRun: number): AnyAction {
+  return { type: BOARD_TICKS_PER_RUN_SET, payload: ticksPerRun }
 }
 
 export function setBoardSize(size: Dimension): AnyAction {

@@ -1,5 +1,6 @@
 import { Reducer } from 'redux'
 import {
+  BOARD_NEXT_RUN,
   BOARD_NEXT_TICK,
   BOARD_RESET_POPULATION,
   BOARD_SET_GENERATION,
@@ -50,6 +51,14 @@ export const creaturesReducer: Reducer<BoardState> = (
           )
       }
 
+    case BOARD_NEXT_RUN:
+      return {
+        ...state,
+        creatures: state.creatures.map((creature) =>
+          rebirthCreature(state, creature)
+        )
+      }
+
     case BOARD_NEXT_TICK:
       return {
         ...state,
@@ -58,12 +67,7 @@ export const creaturesReducer: Reducer<BoardState> = (
             creature.diedAt !== null &&
             state.tick > creature.diedAt + state.creatureRestoreDelay
           ) {
-            return {
-              ...creature,
-              diedAt: null,
-              location: getRandomLocation(state),
-              heading: getRandomHeading()
-            }
+            return rebirthCreature(state, creature)
           } else {
             return creature
           }
@@ -193,5 +197,14 @@ export function createCreature(
     heading: getRandomHeading(),
     location: getRandomLocation(state),
     diedAt: null
+  }
+}
+
+function rebirthCreature(state: BoardState, creature: Creature): Creature {
+  return {
+    ...creature,
+    diedAt: null,
+    location: getRandomLocation(state),
+    heading: getRandomHeading()
   }
 }

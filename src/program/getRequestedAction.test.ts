@@ -1,6 +1,5 @@
 import { eat } from './actions'
 import { getRequestedAction } from './getRequestedAction'
-import { BoardState } from './types'
 
 describe('getRequestedAction', () => {
   test.each([
@@ -14,17 +13,20 @@ describe('getRequestedAction', () => {
           type: 'creature',
           expression,
           location: { x: 0, y: 0 },
-          heading: Math.PI / 2
+          heading: Math.PI / 2,
+          diedAt: null
         },
         {
           id: 1,
           type: 'creature',
           expression: '3',
           location: { x: 0, y: 0.5 },
-          heading: Math.PI / 2
+          heading: Math.PI / 2,
+          diedAt: null
         }
-      ]
-    } as BoardState
+      ],
+      plants: []
+    } as any
 
     expect(getRequestedAction(state, 0)).toEqual(expected)
   })
