@@ -24,6 +24,7 @@ import Title from '../Title'
 import { Board } from './Board'
 import { Creature } from './Creature'
 import { CreatureDetails } from './CreatureDetails'
+import { ScoreBoard } from './ScoreBoard'
 
 export const Population: FC = () => {
   const generation = useSelector(getGeneration)
@@ -55,6 +56,7 @@ export const Population: FC = () => {
   })
   const training = useSelector(isTraining)
   const running = useSelector(isRunning)
+  const pauseUi = useSelector(isUiPaused)
   const dispatch = useDispatch()
   const boardWidth = 600
 
@@ -89,23 +91,27 @@ export const Population: FC = () => {
             </Stack>
           </Box>
         </Grid>
-        {selectedCreature && (
-          <Grid item md={4}>
-            <Title color="black">
-              <Stack direction="row" alignItems="center">
-                <Creature
-                  creature={{ ...selectedCreature, heading: 0 }}
-                  width="1em"
-                />
-                <span style={{ paddingLeft: '0.75em' }}>
-                  Creature {selectedCreature.id}
-                  {selectedCreature.diedAt !== null && ' (dead)'}
-                </span>
-              </Stack>
-            </Title>
-            <CreatureDetails creature={selectedCreature} />
-          </Grid>
-        )}
+        <Grid item md={4}>
+          {selectedCreature ? (
+            <>
+              <Title color="black">
+                <Stack direction="row" alignItems="center">
+                  <Creature
+                    creature={{ ...selectedCreature, heading: 0 }}
+                    width="1em"
+                  />
+                  <span style={{ paddingLeft: '0.75em' }}>
+                    Creature {selectedCreature.id}
+                    {selectedCreature.diedAt !== null && ' (dead)'}
+                  </span>
+                </Stack>
+              </Title>
+              <CreatureDetails creature={selectedCreature} />
+            </>
+          ) : (
+            !pauseUi && <ScoreBoard />
+          )}
+        </Grid>
       </Grid>
     </>
   )
