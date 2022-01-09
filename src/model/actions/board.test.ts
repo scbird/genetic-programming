@@ -1,7 +1,6 @@
 import { applyMiddleware, createStore } from 'redux'
 import thunk from 'redux-thunk'
-import { reducer } from '../reducers'
-import { initialState } from '../reducers/board'
+import { initialState, reducer } from '../reducers'
 import { getCreatures, getCreatureScore } from '../selectors'
 import { trainNextGeneration } from './train'
 
@@ -9,7 +8,7 @@ describe('Board actions', () => {
   it('Should run a simulation', () => {
     const store = createStore(reducer, initialState, applyMiddleware(thunk))
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 15; i++) {
       store.dispatch(trainNextGeneration() as any)
     }
 

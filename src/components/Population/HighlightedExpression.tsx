@@ -1,12 +1,12 @@
 import React, { CSSProperties, FC } from 'react'
-import { operators } from '../../program/operators'
-import { parse } from '../../program/parse'
 import {
   Node,
   OperatorNode,
+  operators,
   OperatorType,
+  parse,
   TerminalNode
-} from '../../program/types'
+} from '../../model'
 
 export interface HighlightedExpressionProps {
   expression: string

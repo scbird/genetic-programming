@@ -1,6 +1,6 @@
 import { AnyAction } from 'redux'
-import { operators } from './operators'
-import { BoardState, Node, OperatorNode, TerminalNode } from './types'
+import { operators } from '../operators'
+import { BoardState, Node, OperatorNode, TerminalNode } from '../types'
 
 export function compile(
   node: Node

@@ -15,3 +15,5 @@ export const reducer: Reducer<BoardState> = (state = initialState, action) => {
 
   return state
 }
+
+export { initialState } from './board'

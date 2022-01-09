@@ -1,19 +1,17 @@
 import { useTheme } from '@mui/material'
 import React, { CSSProperties, FC, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectCreature } from '../../program/actions'
 import {
+  BoardState,
+  Creature as CreatureModel,
   getBoardSize,
   getCreatures,
   getPlants,
   getSelectedCreatureId,
-  isTraining
-} from '../../program/selectors'
-import {
-  BoardState,
-  Creature as CreatureModel,
-  Plant
-} from '../../program/types'
+  isTraining,
+  Plant,
+  selectCreature
+} from '../../model'
 import { Creature } from './Creature'
 
 const SELECTION_SIZE_EM = 2

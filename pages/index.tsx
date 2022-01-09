@@ -17,9 +17,7 @@ import thunk from 'redux-thunk'
 import { Population } from '../src/components/Population'
 import { Settings } from '../src/components/Settings'
 import { Training } from '../src/components/Training'
-import { resetTraining } from '../src/program/actions'
-import { reducer } from '../src/program/reducers'
-import { initialState } from '../src/program/reducers/board'
+import { initialState, reducer, resetTraining } from '../src/model'
 
 const mdTheme = createTheme({
   typography: () => ({

@@ -2,12 +2,12 @@ import { Box, Stack, Typography } from '@mui/material'
 import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
+  isTraining,
   resetTraining,
   startTraining,
   stopTraining,
   trainNextGeneration
-} from '../../program/actions'
-import { isTraining } from '../../program/selectors'
+} from '../../model'
 import { ControlBar } from '../ControlBar'
 import Title from '../Title'
 import { Chart } from './Chart'

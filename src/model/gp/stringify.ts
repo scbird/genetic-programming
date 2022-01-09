@@ -1,4 +1,4 @@
-import { Node, OperatorNode, TerminalNode } from './types'
+import { Node, OperatorNode, TerminalNode } from '../types'
 
 export function stringify(node: Node): string {
   if (node.type === 'terminal') {

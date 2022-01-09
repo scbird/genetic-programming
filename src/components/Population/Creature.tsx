@@ -1,5 +1,5 @@
 import React, { CSSProperties, FC } from 'react'
-import { Creature as CreatureModel } from '../../program/types'
+import { Creature as CreatureModel } from '../../model'
 import hsl from 'hsl-to-hex'
 
 const NUM_COLORS = 30

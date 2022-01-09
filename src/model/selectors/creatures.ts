@@ -1,6 +1,6 @@
 import { AnyAction } from 'redux'
 import { createSelector } from 'reselect'
-import { getRequestedAction } from '../getRequestedAction'
+import { getRequestedAction } from '../gp'
 import { BoardState, Creature, Plant } from '../types'
 import {
   getDistance,

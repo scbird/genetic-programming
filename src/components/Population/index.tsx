@@ -3,13 +3,7 @@ import { Box, Grid, IconButton, Stack, Typography } from '@mui/material'
 import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  resetPopulation,
-  selectCreature,
-  startRunning,
-  step,
-  stopRunning
-} from '../../program/actions'
-import {
+  BoardState,
   getCreatures,
   getGeneration,
   getPopulationScore,
@@ -18,9 +12,13 @@ import {
   getTicksPerRun,
   isPaused,
   isRunning,
-  isTraining
-} from '../../program/selectors'
-import { BoardState } from '../../program/types'
+  isTraining,
+  resetPopulation,
+  selectCreature,
+  startRunning,
+  step,
+  stopRunning
+} from '../../model'
 import { ControlBar } from '../ControlBar'
 import Title from '../Title'
 import { Board } from './Board'

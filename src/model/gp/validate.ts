@@ -1,5 +1,5 @@
-import { operators } from './operators'
-import { Node, OperatorNode, TerminalNode } from './types'
+import { operators } from '../operators'
+import { Node, OperatorNode, TerminalNode } from '../types'
 
 export function validate(node: Node) {
   if (node.type === 'terminal') {

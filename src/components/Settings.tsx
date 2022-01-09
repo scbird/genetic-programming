@@ -2,23 +2,21 @@ import { Grid, TextField, Tooltip } from '@mui/material'
 import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
+  getBoardSize,
+  getNumCreatures,
+  getNumPlants,
+  getRawMutationRate,
+  getRawSurvivalRate,
+  getRunsPerGeneration,
+  getTicksPerRun,
   setBoardSize,
   setMutationRate,
   setNumCreatures,
   setNumPlants,
+  setRunsPerGeneration,
   setSurvivalRate,
-  setTicksPerRun,
-  setRunsPerGeneration
-} from '../program/actions'
-import {
-  getBoardSize,
-  getNumCreatures,
-  getNumPlants,
-  getRunsPerGeneration,
-  getTicksPerRun,
-  getRawMutationRate,
-  getRawSurvivalRate
-} from '../program/selectors'
+  setTicksPerRun
+} from '../model'
 import Title from './Title'
 
 export const Settings: FC = () => {

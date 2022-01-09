@@ -1,7 +1,6 @@
 import { Box, Typography, useTheme } from '@mui/material'
 import React, { FC } from 'react'
-import { getCreatureScore } from '../../program/selectors'
-import { Creature as CreatureModel } from '../../program/types'
+import { Creature as CreatureModel, getCreatureScore } from '../../model'
 import { HighlightedExpression } from './HighlightedExpression'
 
 export interface CreatureDetailsProps {

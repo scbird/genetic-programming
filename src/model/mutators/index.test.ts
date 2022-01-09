@@ -1,10 +1,10 @@
-import { generate } from '../generate'
+import { generate } from '../gp'
 import { point } from './point'
 import { regenerate } from './regenerate'
-import { parse } from '../parse'
-import { stringify } from '../stringify'
+import { parse } from '../gp'
+import { stringify } from '../gp'
 import { Node } from '../types'
-import { validate } from '../validate'
+import { validate } from '../gp'
 
 describe('Regeneration mutator', () => {
   const maxDepth = 3

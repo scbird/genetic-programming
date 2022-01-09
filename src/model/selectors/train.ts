@@ -1,7 +1,6 @@
 import { createSelector } from 'reselect'
+import { parse, stringify } from '../gp'
 import { Mutator, regenerate } from '../mutators'
-import { parse } from '../parse'
-import { stringify } from '../stringify'
 import { BoardState, Generation } from '../types'
 import { getMutationRate, getNumCreatures, getSurvivalRate } from './board'
 import { getCreatureScore } from './creatures'

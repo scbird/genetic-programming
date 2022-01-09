@@ -1,4 +1,4 @@
-import { Node, OperatorNode, TerminalNode } from './types'
+import { Node, OperatorNode, TerminalNode } from '../types'
 
 export function parse(expression: string): Node {
   let pos = 0

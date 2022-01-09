@@ -1,8 +1,8 @@
 import { AnyAction } from 'redux'
 import { compile } from './compile'
 import { parse } from './parse'
-import { getCreatureExpression } from './selectors'
-import { BoardState } from './types'
+import { getCreatureExpression } from '../selectors'
+import { BoardState } from '../types'
 
 export function getRequestedAction(
   state: BoardState,

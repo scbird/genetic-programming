@@ -10,14 +10,14 @@ export interface BoardState {
   run: number
   ticksPerRun: number
   runsPerGeneration: number
-  creatures: readonly Creature[]
-  plants: readonly Plant[]
+  creatures: Creature[]
+  plants: Plant[]
   boardSize: Dimension
   plantRestoreDelay: number
   creatureRestoreDelay: number
   numPlants: number
   numCreatures: number
-  generations: readonly Generation[]
+  generations: Generation[]
   training: boolean
   running: boolean
   // These are strings so that the user can enter the decimal point

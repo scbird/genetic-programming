@@ -4,7 +4,7 @@ import {
   GENERATION_PREPARE_NEXT,
   GENERATIONS_CLEAR
 } from '../actions'
-import { generate } from '../generate'
+import { generate, stringify } from '../gp'
 import {
   getCreatures,
   getCreatureScore,
@@ -14,7 +14,6 @@ import {
   getPlants,
   getTick
 } from '../selectors'
-import { stringify } from '../stringify'
 import { BoardState, Generation } from '../types'
 import { initialState } from './board'
 import { createCreature } from './creature'
@@ -49,8 +48,8 @@ export const generationsReducer: Reducer<BoardState> = (
                   (acc, creature) => acc + getCreatureScore(creature),
                   0
                 ),
-                creatures: getCreatures(state),
-                plants: getPlants(state),
+                creatures: [...getCreatures(state)],
+                plants: [...getPlants(state)],
                 tick: getTick(state)
               }
             } else {

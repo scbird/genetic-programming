@@ -1,4 +1,4 @@
-import { eat } from './actions'
+import { eat } from '../actions'
 import { getRequestedAction } from './getRequestedAction'
 
 describe('getRequestedAction', () => {

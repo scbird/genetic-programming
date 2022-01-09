@@ -2,16 +2,15 @@ import { Box } from '@mui/material'
 import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  ResponsiveContainer,
+  Bar,
   BarChart,
   CartesianGrid,
-  XAxis,
-  YAxis,
+  ResponsiveContainer,
   Tooltip,
-  Bar
+  XAxis,
+  YAxis
 } from 'recharts'
-import { setGeneration } from '../../program/actions'
-import { getGenerationScores } from '../../program/selectors'
+import { getGenerationScores, setGeneration } from '../../model'
 
 export const Chart: FC = () => {
   const dispatch = useDispatch()

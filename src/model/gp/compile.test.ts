@@ -1,9 +1,9 @@
 import { AnyAction } from 'redux'
-import { eat } from './actions'
+import { eat } from '../actions'
 import { compile } from './compile'
 import { parse } from './parse'
-import { BoardState } from './types'
-import { getDistance } from './util'
+import { BoardState } from '../types'
+import { getDistance } from '../util'
 
 describe('compile', () => {
   it('should support simple compilation', () => {

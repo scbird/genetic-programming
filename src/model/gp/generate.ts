@@ -1,5 +1,5 @@
-import { operators } from './operators'
-import { Node, Operator, OperatorNode, TerminalNode } from './types'
+import { operators } from '../operators'
+import { Node, Operator, OperatorNode, TerminalNode } from '../types'
 
 const MAX_DEPTH = 20
 const TERMINAL_RANGE = 5

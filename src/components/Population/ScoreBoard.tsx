@@ -1,8 +1,7 @@
 import { Box, Stack } from '@mui/material'
 import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectCreature } from '../../program/actions'
-import { getCreatures, getCreatureScore } from '../../program/selectors'
+import { getCreatures, getCreatureScore, selectCreature } from '../../model'
 import Title from '../Title'
 import { Creature } from './Creature'
 

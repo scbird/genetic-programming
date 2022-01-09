@@ -1,4 +1,4 @@
-import { generate } from '../generate'
+import { generate } from '../gp'
 import { Node, OperatorNode } from '../types'
 import { Mutator } from './types'
 
