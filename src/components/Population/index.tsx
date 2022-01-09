@@ -1,5 +1,12 @@
 import { Close } from '@mui/icons-material'
-import { Box, Grid, IconButton, Stack, Typography } from '@mui/material'
+import {
+  Box,
+  Grid,
+  IconButton,
+  Stack,
+  Tooltip,
+  Typography
+} from '@mui/material'
 import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -109,10 +116,12 @@ export const Population: FC = () => {
                     {selectedCreature.diedAt !== null && ' (dead)'}
                   </div>
                   <Box style={{ flex: 1, textAlign: 'right' }}>
-                    <IconButton
-                      onClick={() => dispatch(selectCreature(undefined))}>
-                      <Close style={{ color: 'gray' }} />
-                    </IconButton>
+                    <Tooltip title="Go back to the creature scoreboard">
+                      <IconButton
+                        onClick={() => dispatch(selectCreature(undefined))}>
+                        <Close style={{ color: 'gray' }} />
+                      </IconButton>
+                    </Tooltip>
                   </Box>
                 </Stack>
               </Title>
