@@ -74,9 +74,13 @@ export const Population: FC = () => {
           <ControlBar
             running={running}
             onReset={() => dispatch(resetPopulation())}
+            resetTooltip="Clear all scores and randomise the population. The creatures' expressions will remain unchanged"
             onStep={() => dispatch(step())}
+            stepTooltip="Progress to the next tick of the population simulation. The desired action of each creature will be determined and executed"
             onStart={() => dispatch(startRunning())}
+            startTooltip="Start the population simulation"
             onStop={() => dispatch(stopRunning())}
+            stopTooltip="Stop the population simulation"
           />
         </Box>
       </Box>

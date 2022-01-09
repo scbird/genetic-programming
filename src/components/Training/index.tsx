@@ -26,9 +26,13 @@ export const Training: FC = () => {
           <ControlBar
             running={training}
             onReset={() => dispatch(resetTraining())}
+            resetTooltip="Resets the training and clears the generation history"
             onStep={() => dispatch(trainNextGeneration())}
+            stepTooltip="Train a single generation"
             onStart={() => dispatch(startTraining())}
+            startTooltip="Start training new generations. Click this button again to stop training"
             onStop={() => dispatch(stopTraining())}
+            stopTooltip="Stop training new generations"
           />
         </Box>
       </Box>
