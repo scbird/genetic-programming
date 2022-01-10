@@ -68,7 +68,7 @@ export const Settings: FC = () => {
           </Tooltip>
         </Grid>
         <Grid item lg={6}>
-          <Tooltip title="How many ticks to run per run when evolving the population. Larger values give each creature more time to eat food before the board is reset. Does not affect population simulator">
+          <Tooltip title="How many ticks per run when evolving the population. Larger values give each creature more time to eat food before the board is reset. Does not affect population simulator">
             <TextField
               label="Ticks per run"
               variant="standard"
