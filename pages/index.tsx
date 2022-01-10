@@ -81,7 +81,12 @@ const Home: NextPage = () => {
             </Grid>
             <Stack mt={4} alignItems="center">
               <Typography variant={'muted' as any}>
-                Stefan Bird, 2022
+                Stefan Bird, 2022 -{' '}
+                <a
+                  href="https://github.com/scbird/genetic-programming"
+                  style={{ textDecoration: 'underline' }}>
+                  Get the source
+                </a>
               </Typography>
             </Stack>
           </Container>
