@@ -1,6 +1,8 @@
 # Genetic programming playground
 
-This is a simple demonstration of Genetic Programming, one of the earliest machine learning algorithms. Visit https://gp.seatiger.org for the demo.
+This is a simple demonstration of Genetic Programming, one of the earliest machine learning algorithms. Visit https://gp.seatiger.org to play 😀
+
+![](board.png) 
 
 ## How does it work?
 
