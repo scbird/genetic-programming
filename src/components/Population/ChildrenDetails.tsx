@@ -29,28 +29,27 @@ export const ChildrenDetails: FC<ChildrenDetailsProps> = ({ creature }) => {
       </Typography>
     )
   } else {
-    const copiedTo = children.filter(
-      ({ expression }) => expression === creature.expression
+    const survivedAs = children.filter(
+      ({ expression, parentId }) =>
+        expression === creature.expression && creature.id === parentId
     )
-    const evolvedTo = children.filter(
-      ({ expression }) => expression !== creature.expression
-    )
+    const evolvedTo = children.filter((child) => !survivedAs.includes(child))
 
     return (
       <>
-        {copiedTo.length > 0 && (
+        {survivedAs.length > 0 && (
           <>
             <Typography>
               <Tooltip
                 placement="top"
-                title={`This creature "survived" and its code has been copied to a new creature in the next generation`}>
-                <span>Copied to:</span>
+                title={`This creature's score was one of the best, so it lives on to the next generation`}>
+                <span>Survives as:</span>
               </Tooltip>
             </Typography>
             <Box ml={2} mb={1} fontWeight="bold">
               <CreaturesList
                 onClick={creatureSelected}
-                creatures={copiedTo}
+                creatures={survivedAs}
                 generation={nextGeneration}
               />
             </Box>
@@ -62,7 +61,7 @@ export const ChildrenDetails: FC<ChildrenDetailsProps> = ({ creature }) => {
               <Tooltip
                 placement="top"
                 title={`The code of these creatures is all based on this creature's code, but each has some random changes`}>
-                <span>Evolved to:</span>
+                <span>Children:</span>
               </Tooltip>
             </Typography>
             <Box ml={2} mb={1} fontWeight="bold">

@@ -34,10 +34,10 @@ export const ParentDetails: FC<ParentDetailsProps> = ({ creature }) => {
     )
   } else {
     const fromText =
-      parent.expression === creature.expression ? 'Copied from' : 'Evolved from'
+      parent.expression === creature.expression ? 'Survived' : 'Parent'
     const fromTooltip =
       parent.expression === creature.expression
-        ? `This creature's code was copied from one of the creatures that "survived" the previous generation`
+        ? `This creature's score in the previous generation was one of the best, so it survived through to this generation`
         : `This creature's code has been randomly changed in some way from its parent's`
 
     return (
