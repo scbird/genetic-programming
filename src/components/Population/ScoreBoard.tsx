@@ -1,9 +1,8 @@
-import { Box, Stack } from '@mui/material'
 import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCreatures, getCreatureScore, selectCreature } from '../../model'
 import Title from '../Title'
-import { Creature } from './Creature'
+import { CreatureLabel } from './CreatureLabel'
 
 export const ScoreBoard: FC = () => {
   const dispatch = useDispatch()
@@ -21,25 +20,15 @@ export const ScoreBoard: FC = () => {
   return (
     <>
       <Title color="black">Scores</Title>
-      <Box style={{ maxHeight: '500px', overflow: 'auto' }}>
-        {creatures.map((creature) => {
-          return (
-            <Stack
-              direction="row"
-              alignItems="center"
-              key={creature.id}
-              onClick={() => dispatch(selectCreature(creature.id))}
-              style={{ marginBottom: '0.5em', cursor: 'pointer' }}>
-              <Box style={{ position: 'relative', top: '0.15em' }}>
-                <Creature creature={{ ...creature, heading: 0 }} width="1em" />
-              </Box>
-              <span style={{ paddingLeft: '0.5em' }}>
-                Creature {creature.id}: score {getCreatureScore(creature)}
-              </span>
-            </Stack>
-          )
-        })}
-      </Box>
+      {creatures.map((creature) => (
+        <div
+          style={{ marginBottom: '0.1em', cursor: 'pointer' }}
+          onClick={() => dispatch(selectCreature(creature.id))}
+          key={creature.id}>
+          <CreatureLabel creature={creature} showDeadStatus />: score{' '}
+          {getCreatureScore(creature)}
+        </div>
+      ))}
     </>
   )
 }

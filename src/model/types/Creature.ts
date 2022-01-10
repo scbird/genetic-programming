@@ -10,4 +10,5 @@ export interface Creature {
   heading: number
   creaturesEaten: number
   plantsEaten: number
+  parentId: number | undefined
 }

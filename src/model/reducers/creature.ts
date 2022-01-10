@@ -46,7 +46,8 @@ export const creaturesReducer: Reducer<BoardState> = (
                 state,
                 idx,
                 generation.creatures[idx % generation.creatures.length]
-                  .expression
+                  .expression,
+                generation.creatures[idx]?.id
               )
           )
       }
@@ -186,7 +187,8 @@ export const creaturesReducer: Reducer<BoardState> = (
 export function createCreature(
   state: BoardState,
   id: number,
-  expression: string
+  expression: string,
+  parentId: number | undefined
 ): Creature {
   return {
     id,
@@ -196,7 +198,8 @@ export function createCreature(
     plantsEaten: 0,
     heading: getRandomHeading(),
     location: getRandomLocation(state),
-    diedAt: null
+    diedAt: null,
+    parentId
   }
 }
 

@@ -6,6 +6,7 @@ import {
 } from '../actions'
 import { generate, stringify } from '../gp'
 import {
+  ExpressionWithLineage,
   getCreatures,
   getCreatureScore,
   getMutatedExpressions,
@@ -64,19 +65,24 @@ export const generationsReducer: Reducer<BoardState> = (
 }
 
 function createNewGeneration(state: BoardState): Generation {
-  let expressions: string[]
+  let expressions: ExpressionWithLineage[]
 
   if (state.generations.length === 0) {
     expressions = Array(getNumCreatures(state))
       .fill(null)
-      .map(() => stringify(generate()))
+      .map(() => ({ expression: stringify(generate()), parentId: undefined }))
   } else {
     expressions = getMutatedExpressions(state)
   }
 
   return {
-    creatures: expressions.map((expression, idx) =>
-      createCreature(state, idx, expression)
+    creatures: expressions.map((expressionWithLineage, idx) =>
+      createCreature(
+        state,
+        idx,
+        expressionWithLineage.expression,
+        expressionWithLineage.parentId
+      )
     ),
     plants: Array(getNumPlants(state))
       .fill(null)

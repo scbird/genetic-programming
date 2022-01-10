@@ -11,7 +11,14 @@ export function isTraining(state: BoardState): boolean {
 
 const MUTATOR: Mutator = regenerate()
 
-export function getMutatedExpressions(state: BoardState): string[] {
+export interface ExpressionWithLineage {
+  expression: string
+  parentId: number | undefined
+}
+
+export function getMutatedExpressions(
+  state: BoardState
+): ExpressionWithLineage[] {
   const creatures = state.generations[state.generations.length - 1].creatures
   const scores = creatures.map((creature) => getCreatureScore(creature))
 
@@ -24,7 +31,10 @@ export function getMutatedExpressions(state: BoardState): string[] {
       // from previous generations don't get lost
       return b.score - a.score || a.idx - b.idx
     })
-    .map(({ idx }) => creatures[idx].expression)
+    .map(({ idx }) => ({
+      expression: creatures[idx].expression,
+      parentId: creatures[idx].id
+    }))
 
   // Initialise the expressions with the best ones from the previous generation
   const expressionsToKeep = Math.ceil(
@@ -44,7 +54,10 @@ export function getMutatedExpressions(state: BoardState): string[] {
       MUTATOR(parse(originalExpression), getMutationRate(state))
     )
 
-    expressions.push(mutatedExpression)
+    expressions.push({
+      expression: mutatedExpression,
+      parentId: creatures[parentIdx].id
+    })
   }
 
   return expressions

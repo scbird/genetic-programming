@@ -29,8 +29,8 @@ import {
 import { ControlBar } from '../ControlBar'
 import Title from '../Title'
 import { Board } from './Board'
-import { Creature } from './Creature'
 import { CreatureDetails } from './CreatureDetails'
+import { CreatureLabel } from './CreatureLabel'
 import { ScoreBoard } from './ScoreBoard'
 
 export const Population: FC = () => {
@@ -107,14 +107,10 @@ export const Population: FC = () => {
             <>
               <Title color="black">
                 <Stack direction="row" alignItems="center">
-                  <Creature
-                    creature={{ ...selectedCreature, heading: 0 }}
-                    width="1em"
+                  <CreatureLabel
+                    creature={selectedCreature}
+                    showDeadStatus={true}
                   />
-                  <div style={{ paddingLeft: '0.75em' }}>
-                    Creature {selectedCreature.id}
-                    {selectedCreature.diedAt !== null && ' (dead)'}
-                  </div>
                   <Box style={{ flex: 1, textAlign: 'right' }}>
                     <Tooltip title="Go back to the creature scoreboard">
                       <IconButton

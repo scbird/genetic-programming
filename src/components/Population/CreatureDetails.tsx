@@ -1,7 +1,9 @@
 import { Box, Typography, useTheme } from '@mui/material'
 import React, { FC } from 'react'
 import { Creature as CreatureModel, getCreatureScore } from '../../model'
+import { ChildrenDetails } from './ChildrenDetails'
 import { HighlightedExpression } from './HighlightedExpression'
+import { ParentDetails } from './ParentDetails'
 
 export interface CreatureDetailsProps {
   creature: CreatureModel
@@ -32,6 +34,10 @@ export const CreatureDetails: FC<CreatureDetailsProps> = ({ creature }) => {
             <HighlightedExpression expression={creature.expression} />
           </Typography>
         </Box>
+      </Box>
+      <Box mb={2}>
+        <ParentDetails creature={creature} />
+        <ChildrenDetails creature={creature} />
       </Box>
     </>
   )

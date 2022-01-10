@@ -10,7 +10,7 @@ import {
   HasLocation,
   normalizeHeading
 } from '../util'
-import { getCreatures, getPlants } from './board'
+import { getCreatures, getGeneration, getPlants } from './board'
 
 const MAX_EAT_DISTANCE = 1
 const MAX_EAT_ANGLE = Math.PI / 4
@@ -76,6 +76,26 @@ export function getCreatureScore(creature: Creature): number {
 export const getPopulationScore = createSelector(getCreatures, (creatures) =>
   creatures.reduce((acc, creature) => acc + getCreatureScore(creature), 0)
 )
+
+export function getParent(
+  state: BoardState,
+  creature: Creature
+): Creature | undefined {
+  const generation = getGeneration(state)
+
+  if (creature.parentId !== undefined) {
+    return state.generations[generation - 1].creatures[creature.parentId]
+  } else {
+    return undefined
+  }
+}
+
+export function getChildren(state: BoardState, creature: Creature): Creature[] {
+  const generation = getGeneration(state)
+  const creatures = state.generations[generation + 1]?.creatures ?? []
+
+  return creatures.filter(({ parentId }) => parentId === creature.id)
+}
 
 function getWouldEatPlant(state: BoardState, id: number) {
   return getWouldEatObject(

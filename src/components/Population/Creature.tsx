@@ -9,7 +9,7 @@ export interface CreatureProps {
   width?: CSSProperties['width']
 }
 
-export const Creature: FC<CreatureProps> = ({ creature, width }) => {
+export const Creature: FC<CreatureProps> = ({ creature, width = '1em' }) => {
   const isDead = creature.diedAt !== null
 
   return (
