@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material'
+import { Box, Tooltip, Typography } from '@mui/material'
 import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -40,7 +40,13 @@ export const ChildrenDetails: FC<ChildrenDetailsProps> = ({ creature }) => {
       <>
         {copiedTo.length > 0 && (
           <>
-            <Typography>Copied to:</Typography>
+            <Typography>
+              <Tooltip
+                placement="top"
+                title={`This creature "survived" and its code has been copied to a new creature in the next generation`}>
+                <span>Copied to:</span>
+              </Tooltip>
+            </Typography>
             <Box ml={2} mb={1} fontWeight="bold">
               <CreaturesList
                 onClick={creatureSelected}
@@ -52,7 +58,13 @@ export const ChildrenDetails: FC<ChildrenDetailsProps> = ({ creature }) => {
         )}
         {evolvedTo.length > 0 && (
           <>
-            <Typography>Evolved to:</Typography>
+            <Typography>
+              <Tooltip
+                placement="top"
+                title={`The code of these creatures is all based on this creature's code, but each has some random changes`}>
+                <span>Evolved to:</span>
+              </Tooltip>
+            </Typography>
             <Box ml={2} mb={1} fontWeight="bold">
               <CreaturesList
                 onClick={creatureSelected}

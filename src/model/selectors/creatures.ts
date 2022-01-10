@@ -14,8 +14,8 @@ import { getCreatures, getGeneration, getPlants } from './board'
 
 const MAX_EAT_DISTANCE = 1
 const MAX_EAT_ANGLE = Math.PI / 4
-const PLANT_SCORE = 1
-const CREATURE_SCORE = 5
+export const PLANT_SCORE = 1
+export const CREATURE_SCORE = 5
 
 export function getClosestCreatureDistance(
   state: BoardState,

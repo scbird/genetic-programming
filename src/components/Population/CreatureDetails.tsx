@@ -1,6 +1,11 @@
-import { Box, Typography, useTheme } from '@mui/material'
+import { Box, Tooltip, Typography, useTheme } from '@mui/material'
 import React, { FC } from 'react'
-import { Creature as CreatureModel, getCreatureScore } from '../../model'
+import {
+  Creature as CreatureModel,
+  CREATURE_SCORE,
+  getCreatureScore,
+  PLANT_SCORE
+} from '../../model'
 import { ChildrenDetails } from './ChildrenDetails'
 import { HighlightedExpression } from './HighlightedExpression'
 import { ParentDetails } from './ParentDetails'
@@ -22,7 +27,12 @@ export const CreatureDetails: FC<CreatureDetailsProps> = ({ creature }) => {
           Creatures eaten: <b>{creature.creaturesEaten}</b>
         </Typography>
         <Typography>
-          Score: <b>{getCreatureScore(creature)}</b>
+          <Tooltip
+            title={`Score = ${PLANT_SCORE} * plants eaten + ${CREATURE_SCORE} * creatures eaten`}>
+            <span>
+              Score: <b>{getCreatureScore(creature)}</b>
+            </span>
+          </Tooltip>
         </Typography>
       </Box>
       <Box mb={2}>

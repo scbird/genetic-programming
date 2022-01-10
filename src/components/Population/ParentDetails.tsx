@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material'
+import { Box, Tooltip, Typography } from '@mui/material'
 import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -24,17 +24,28 @@ export const ParentDetails: FC<ParentDetailsProps> = ({ creature }) => {
 
   if (!parent) {
     return (
-      <Typography>
-        Parent: <b>(None)</b>
-      </Typography>
+      <Tooltip
+        title="This creature was randomly generated - it has no parent"
+        placement="top">
+        <Typography>
+          Parent: <b>(None)</b>
+        </Typography>
+      </Tooltip>
     )
   } else {
     const fromText =
       parent.expression === creature.expression ? 'Copied from' : 'Evolved from'
+    const fromTooltip =
+      parent.expression === creature.expression
+        ? `This creature's code was copied from one of the creatures that "survived" the previous generation`
+        : `This creature's code has been randomly changed in some way from its parent's`
 
     return (
       <Typography>
-        {fromText}:
+        <Tooltip title={fromTooltip} placement="top">
+          <span>{fromText}</span>
+        </Tooltip>
+        :
         <Box ml={2} mb={1} fontWeight="bold">
           <CreaturesList
             creatures={[parent]}
